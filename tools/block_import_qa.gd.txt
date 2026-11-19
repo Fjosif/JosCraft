@@ -1,0 +1,66 @@
+extends SceneTree
+
+var checks: Array = []
+var failures: Array = []
+
+func check(condition: bool, label: String) -> void:
+    checks.append({"name": label, "pass": condition})
+    if not condition:
+        failures.append(label)
+
+func bounds(node: Node3D) -> AABB:
+    var result := AABB()
+    var first := true
+    for mesh_node in node.find_children("*", "MeshInstance3D", true, false):
+        for vertex in mesh_node.mesh.get_faces():
+            var p: Vector3 = mesh_node.global_transform * vertex
+            if first:
+                result = AABB(p, Vector3.ZERO)
+                first = false
+            else:
+                result = result.expand(p)
+    return result
+
+func matches(actual: AABB, expected: Dictionary) -> bool:
+    var low := Vector3(expected.min_x, expected.min_y, expected.min_z)
+    var high := Vector3(expected.max_x, expected.max_y, expected.max_z)
+    return actual.position.distance_to(low) < 0.001 and actual.end.distance_to(high) < 0.001
+
+func _initialize() -> void:
+    call_deferred("run")
+
+func run() -> void:
+    var meta: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://block-models.json"))
+    var stage := Node3D.new()
+    root.add_child(stage)
+    for key in meta.blocks:
+        var model: Dictionary = meta.blocks[key]
+        var packed := load("res://" + model.glb) as PackedScene
+        check(packed != null, key + " imports as PackedScene")
+        if packed == null:
+            continue
+        var instance := packed.instantiate() as Node3D
+        stage.add_child(instance)
+        check(matches(bounds(instance), model.godot_bounds_closed_or_rest), key + " actual rest mesh bounds")
+        var players := instance.find_children("*", "AnimationPlayer", true, false)
+        if model.animations.size() > 0:
+            check(players.size() == 1, key + " animation player available")
+            if players.size() == 1:
+                var player := players[0] as AnimationPlayer
+                for clip in ["Open", "Close"]:
+                    check(player.has_animation(clip), key + " has " + clip)
+                    if player.has_animation(clip):
+                        player.play(clip)
+                        player.seek(player.get_animation(clip).length, true)
+                        player.pause()
+                        var expected: Dictionary = model.godot_bounds_open if clip == "Open" else model.godot_bounds_closed_or_rest
+                        check(matches(bounds(instance), expected), key + " " + clip + " actual animated bounds")
+        stage.remove_child(instance)
+        instance.free()
+    stage.free()
+    var report := {"pass": failures.is_empty(), "scope": "Isolated Godot PackedScene import, actual transformed mesh bounds and AnimationPlayer endpoints. Does not certify gameplay integration or player collisions.", "checks": checks, "failures": failures}
+    var output := FileAccess.open(OS.get_cmdline_user_args()[0], FileAccess.WRITE)
+    output.store_string(JSON.stringify(report, "  ") + "\n")
+    output.close()
+    print(JSON.stringify({"pass": failures.is_empty(), "checks": checks.size(), "failures": failures}))
+    quit(0 if failures.is_empty() else 1)

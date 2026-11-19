@@ -1,0 +1,405 @@
+{
+  "project": "JOSCRAFT",
+  "target_engine": "Godot 4.7.2 Mono",
+  "authorship": "Original procedural low-poly models, rigs, vertex palettes, and animations created by Antigravity (no third-party or copyrighted assets).",
+  "coordinate_convention": {
+    "units": "meters",
+    "up": "+Y",
+    "forward": "-Z",
+    "origin": "floor under feet (Y=0)"
+  },
+  "creatures": {
+    "dog": {
+      "name": "dog",
+      "relative_source": "source/dog.blend",
+      "relative_export": "exports/dog.glb",
+      "relative_preview": "previews/dog_preview.png",
+      "relative_side_preview": "previews/dog_side.png",
+      "sha256_glb": "615f695a423a194e0d310d7686632d943552084142192baf1a4d41350583a160",
+      "vertices": 2208,
+      "triangles": 1012,
+      "materials": [
+        "dog_Palette"
+      ],
+      "color_attributes": [
+        "Color"
+      ],
+      "external_images": [],
+      "rest_bounds_godot": {
+        "min_x": -0.2398,
+        "max_x": 0.2392,
+        "min_y": 0.0002,
+        "max_y": 1.004,
+        "min_z": -0.6752,
+        "max_z": 0.3828,
+        "width_x": 0.479,
+        "height_y": 1.0038,
+        "depth_z": 1.058
+      },
+      "animations": [
+        "Hurt",
+        "Sit",
+        "Jump",
+        "Run",
+        "Walk",
+        "Idle"
+      ],
+      "clip_metrics_godot": {
+        "Hurt": {
+          "frames": [
+            1,
+            19
+          ],
+          "lowest_y": 0.0,
+          "highest_y": 1.1012,
+          "max_width_x": 0.5137,
+          "max_depth_z": 1.0174
+        },
+        "Sit": {
+          "frames": [
+            1,
+            33
+          ],
+          "lowest_y": 0.0049,
+          "highest_y": 0.9885,
+          "max_width_x": 0.4818,
+          "max_depth_z": 1.269
+        },
+        "Jump": {
+          "frames": [
+            1,
+            29
+          ],
+          "lowest_y": -0.0087,
+          "highest_y": 1.1745,
+          "max_width_x": 0.4936,
+          "max_depth_z": 1.0726
+        },
+        "Run": {
+          "frames": [
+            1,
+            25
+          ],
+          "lowest_y": 0.0061,
+          "highest_y": 1.0999,
+          "max_width_x": 0.479,
+          "max_depth_z": 1.0638
+        },
+        "Walk": {
+          "frames": [
+            1,
+            33
+          ],
+          "lowest_y": 0.0121,
+          "highest_y": 1.0284,
+          "max_width_x": 0.479,
+          "max_depth_z": 1.0581
+        },
+        "Idle": {
+          "frames": [
+            1,
+            49
+          ],
+          "lowest_y": 0.0,
+          "highest_y": 1.0306,
+          "max_width_x": 0.479,
+          "max_depth_z": 1.0591
+        }
+      }
+    },
+    "rabbit": {
+      "name": "rabbit",
+      "relative_source": "source/rabbit.blend",
+      "relative_export": "exports/rabbit.glb",
+      "relative_preview": "previews/rabbit_preview.png",
+      "relative_side_preview": "previews/rabbit_side.png",
+      "sha256_glb": "d71786f3300419a8ffaf200b10261d0a5432c9db905ae6d311f362c7f6b7cec0",
+      "vertices": 1920,
+      "triangles": 880,
+      "materials": [
+        "rabbit_Palette"
+      ],
+      "color_attributes": [
+        "Color"
+      ],
+      "external_images": [],
+      "rest_bounds_godot": {
+        "min_x": -0.21,
+        "max_x": 0.21,
+        "min_y": 0.0002,
+        "max_y": 0.9242,
+        "min_z": -0.4501,
+        "max_z": 0.36,
+        "width_x": 0.42,
+        "height_y": 0.924,
+        "depth_z": 0.8101
+      },
+      "animations": [
+        "Hurt",
+        "Sit",
+        "Jump",
+        "Run",
+        "Walk",
+        "Idle"
+      ],
+      "clip_metrics_godot": {
+        "Hurt": {
+          "frames": [
+            1,
+            19
+          ],
+          "lowest_y": -0.0006,
+          "highest_y": 0.903,
+          "max_width_x": 0.4537,
+          "max_depth_z": 0.7959
+        },
+        "Sit": {
+          "frames": [
+            1,
+            33
+          ],
+          "lowest_y": 0.0072,
+          "highest_y": 0.9187,
+          "max_width_x": 0.42,
+          "max_depth_z": 0.8488
+        },
+        "Jump": {
+          "frames": [
+            1,
+            25
+          ],
+          "lowest_y": 0.0116,
+          "highest_y": 1.0657,
+          "max_width_x": 0.42,
+          "max_depth_z": 0.8548
+        },
+        "Run": {
+          "frames": [
+            1,
+            19
+          ],
+          "lowest_y": 0.0063,
+          "highest_y": 0.9853,
+          "max_width_x": 0.42,
+          "max_depth_z": 0.8548
+        },
+        "Walk": {
+          "frames": [
+            1,
+            25
+          ],
+          "lowest_y": -0.0008,
+          "highest_y": 0.9964,
+          "max_width_x": 0.42,
+          "max_depth_z": 0.8498
+        },
+        "Idle": {
+          "frames": [
+            1,
+            49
+          ],
+          "lowest_y": -0.0,
+          "highest_y": 0.9391,
+          "max_width_x": 0.42,
+          "max_depth_z": 0.815
+        }
+      }
+    },
+    "fox": {
+      "name": "fox",
+      "relative_source": "source/fox.blend",
+      "relative_export": "exports/fox.glb",
+      "relative_preview": "previews/fox_preview.png",
+      "relative_side_preview": "previews/fox_side.png",
+      "sha256_glb": "307bcf98f9d63ca1a714f3051e759b8b6bf3b7a720ba419d2526d500b70622a4",
+      "vertices": 2208,
+      "triangles": 1012,
+      "materials": [
+        "fox_Palette"
+      ],
+      "color_attributes": [
+        "Color"
+      ],
+      "external_images": [],
+      "rest_bounds_godot": {
+        "min_x": -0.1902,
+        "max_x": 0.19,
+        "min_y": 0.0002,
+        "max_y": 1.0005,
+        "min_z": -0.6601,
+        "max_z": 0.7055,
+        "width_x": 0.3802,
+        "height_y": 1.0003,
+        "depth_z": 1.3657
+      },
+      "animations": [
+        "Hurt",
+        "Sit",
+        "Jump",
+        "Run",
+        "Walk",
+        "Idle"
+      ],
+      "clip_metrics_godot": {
+        "Hurt": {
+          "frames": [
+            1,
+            19
+          ],
+          "lowest_y": 0.0,
+          "highest_y": 1.0898,
+          "max_width_x": 0.4653,
+          "max_depth_z": 1.334
+        },
+        "Sit": {
+          "frames": [
+            1,
+            33
+          ],
+          "lowest_y": 0.0049,
+          "highest_y": 0.9785,
+          "max_width_x": 0.3946,
+          "max_depth_z": 1.3619
+        },
+        "Jump": {
+          "frames": [
+            1,
+            29
+          ],
+          "lowest_y": -0.0067,
+          "highest_y": 1.1706,
+          "max_width_x": 0.38,
+          "max_depth_z": 1.3702
+        },
+        "Run": {
+          "frames": [
+            1,
+            25
+          ],
+          "lowest_y": 0.0095,
+          "highest_y": 1.097,
+          "max_width_x": 0.38,
+          "max_depth_z": 1.3746
+        },
+        "Walk": {
+          "frames": [
+            1,
+            33
+          ],
+          "lowest_y": 0.0002,
+          "highest_y": 1.02,
+          "max_width_x": 0.38,
+          "max_depth_z": 1.3653
+        },
+        "Idle": {
+          "frames": [
+            1,
+            49
+          ],
+          "lowest_y": 0.0,
+          "highest_y": 1.0227,
+          "max_width_x": 0.4037,
+          "max_depth_z": 1.3684
+        }
+      }
+    },
+    "zombie": {
+      "name": "zombie",
+      "relative_source": "source/zombie.blend",
+      "relative_export": "exports/zombie.glb",
+      "relative_preview": "previews/zombie_preview.png",
+      "relative_side_preview": "previews/zombie_side.png",
+      "sha256_glb": "7f634c31735e4344db69c1c10274b9d08a5b71324c76806a7adb8ed9de8a1902",
+      "vertices": 1632,
+      "triangles": 748,
+      "materials": [
+        "zombie_Palette"
+      ],
+      "color_attributes": [
+        "Color"
+      ],
+      "external_images": [],
+      "rest_bounds_godot": {
+        "min_x": -0.33,
+        "max_x": 0.33,
+        "min_y": 0.0,
+        "max_y": 2.0938,
+        "min_z": -0.5331,
+        "max_z": 0.1948,
+        "width_x": 0.66,
+        "height_y": 2.0938,
+        "depth_z": 0.7279
+      },
+      "animations": [
+        "Hurt",
+        "Attack",
+        "Jump",
+        "Run",
+        "Walk",
+        "Idle"
+      ],
+      "clip_metrics_godot": {
+        "Hurt": {
+          "frames": [
+            1,
+            19
+          ],
+          "lowest_y": 0.0,
+          "highest_y": 2.1211,
+          "max_width_x": 0.7239,
+          "max_depth_z": 1.0368
+        },
+        "Attack": {
+          "frames": [
+            1,
+            25
+          ],
+          "lowest_y": 0.0,
+          "highest_y": 2.1092,
+          "max_width_x": 0.66,
+          "max_depth_z": 0.8242
+        },
+        "Jump": {
+          "frames": [
+            1,
+            27
+          ],
+          "lowest_y": -0.0076,
+          "highest_y": 2.3356,
+          "max_width_x": 0.66,
+          "max_depth_z": 0.8811
+        },
+        "Run": {
+          "frames": [
+            1,
+            25
+          ],
+          "lowest_y": 0.0318,
+          "highest_y": 2.1517,
+          "max_width_x": 0.6705,
+          "max_depth_z": 1.0837
+        },
+        "Walk": {
+          "frames": [
+            1,
+            33
+          ],
+          "lowest_y": 0.0085,
+          "highest_y": 2.1229,
+          "max_width_x": 0.6678,
+          "max_depth_z": 0.931
+        },
+        "Idle": {
+          "frames": [
+            1,
+            49
+          ],
+          "lowest_y": 0.0,
+          "highest_y": 2.098,
+          "max_width_x": 0.66,
+          "max_depth_z": 0.7373
+        }
+      }
+    }
+  }
+}

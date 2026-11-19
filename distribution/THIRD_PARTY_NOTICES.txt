@@ -1,0 +1,7 @@
+JOSCRAFT uses the Godot Engine, distributed under the MIT license. See GODOT-LICENSE.txt and https://godotengine.org/license/ for engine and third-party component notices.
+
+The self-contained .NET runtime is from the .NET Foundation and contributors, with license and third-party notices at https://github.com/dotnet/runtime/blob/main/LICENSE.TXT and https://github.com/dotnet/runtime/blob/main/THIRD-PARTY-NOTICES.TXT .
+
+Recipe patterns and quantities are factual reference data normalized from Mojang's public Bedrock samples. See https://github.com/Mojang/bedrock-samples and its LICENSE.md for the source reference. Minecraft artwork, models and textures are not included as JOSCRAFT runtime assets. The full catalogue is a reference for gradual material/station implementation, not a claim of Minecraft compatibility or affiliation.
+
+Original JOSCRAFT game artwork, code, character models and generated textures remain separate from the third-party engine and recipe references.

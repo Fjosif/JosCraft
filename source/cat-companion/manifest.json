@@ -1,0 +1,121 @@
+{
+  "project": "JOSCRAFT",
+  "target_engine": "Godot 4.7.2 Mono",
+  "authorship": "Original procedural low-poly quadruped cat companion, rig, vertex palette, and animations created by Antigravity (no third-party or copyrighted assets).",
+  "coordinate_convention": {
+    "units": "meters",
+    "up": "+Y",
+    "forward": "-Z",
+    "origin": "floor under paws (Y=0)"
+  },
+  "creature": {
+    "name": "cat_companion",
+    "relative_source": "source/cat-companion.blend",
+    "relative_export": "exports/cat-companion.glb",
+    "relative_preview": "previews/cat-preview.png",
+    "relative_side_preview": "previews/cat-side.png",
+    "relative_animations_preview": "previews/cat-animations.png",
+    "sha256_glb": "525d5d63a00642575212fc29a2b129fab820fe9dccbc815719c86d6985dddce2",
+    "vertices": 3168,
+    "triangles": 1452,
+    "materials": [
+      "cat_Palette"
+    ],
+    "color_attributes": [
+      "Color"
+    ],
+    "external_images": [],
+    "rest_bounds_godot": {
+      "min_x": -0.1601,
+      "max_x": 0.16,
+      "min_y": 0.0002,
+      "max_y": 0.7511,
+      "min_z": -0.4626,
+      "max_z": 0.6521,
+      "width_x": 0.3201,
+      "height_y": 0.7509,
+      "depth_z": 1.1146
+    },
+    "animations": [
+      "Purr",
+      "Hurt",
+      "Sit",
+      "Jump",
+      "Run",
+      "Walk",
+      "Idle"
+    ],
+    "clip_metrics_godot": {
+      "Purr": {
+        "frames": [
+          1,
+          37
+        ],
+        "lowest_y": 0.0022,
+        "highest_y": 0.768,
+        "max_width_x": 0.3416,
+        "max_depth_z": 1.0213
+      },
+      "Hurt": {
+        "frames": [
+          1,
+          19
+        ],
+        "lowest_y": 0.0,
+        "highest_y": 0.8127,
+        "max_width_x": 0.3832,
+        "max_depth_z": 1.1187
+      },
+      "Sit": {
+        "frames": [
+          1,
+          33
+        ],
+        "lowest_y": 0.0041,
+        "highest_y": 0.7837,
+        "max_width_x": 0.3647,
+        "max_depth_z": 1.104
+      },
+      "Jump": {
+        "frames": [
+          1,
+          29
+        ],
+        "lowest_y": -0.0076,
+        "highest_y": 0.9139,
+        "max_width_x": 0.32,
+        "max_depth_z": 1.1679
+      },
+      "Run": {
+        "frames": [
+          1,
+          25
+        ],
+        "lowest_y": 0.0026,
+        "highest_y": 0.8408,
+        "max_width_x": 0.32,
+        "max_depth_z": 1.1569
+      },
+      "Walk": {
+        "frames": [
+          1,
+          33
+        ],
+        "lowest_y": 0.0114,
+        "highest_y": 0.7723,
+        "max_width_x": 0.32,
+        "max_depth_z": 1.1151
+      },
+      "Idle": {
+        "frames": [
+          1,
+          49
+        ],
+        "lowest_y": 0.0,
+        "highest_y": 0.7653,
+        "max_width_x": 0.3353,
+        "max_depth_z": 1.1177
+      }
+    }
+  }
+}

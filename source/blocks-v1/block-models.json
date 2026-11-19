@@ -1,0 +1,373 @@
+{
+  "project": "JOSCRAFT",
+  "target_engine": "Godot 4.7.2 Mono",
+  "authorship": "Original procedural models, UVs, pivots, and animations created by Antigravity using JOSCRAFT oak-planks-v1.png and oak-bark-v1.png.",
+  "coordinate_convention": {
+    "units": "meters",
+    "up": "+Y",
+    "forward": "-Z",
+    "cell_xz": "[-0.5, 0.5]"
+  },
+  "measurement_method": "Direct GLB binary chunk evaluation (nodes, mesh POSITION accessors, and Open/Close animation keyframes across rest, endpoints, and full sweep) plus Blender 5.2.2 GLB reimport for triangle/material/preview verification (not a Godot runtime physics test).",
+  "blocks": {
+    "oak-slab": {
+      "namespaced_id": "minecraft:oak_slab",
+      "anchor": "bottom-center (0, 0, 0) in cell",
+      "support_requirement": "none (self-supporting half block)",
+      "occupancy_cells": [
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "clearance_cells": [],
+      "name": "oak-slab",
+      "glb": "exports/oak-slab.glb",
+      "sha256": "e6d5336bc3973d7476fef3a936ee62483d6e206abdad790e791e36b226fb34f3",
+      "vertices": 96,
+      "triangles": 44,
+      "materials": [
+        "OakPlanks"
+      ],
+      "unpacked_external_images": [],
+      "nodes": [
+        "OakSlabMesh",
+        "oak_slab"
+      ],
+      "animations": [],
+      "godot_bounds_closed_or_rest": {
+        "min_x": -0.5,
+        "max_x": 0.5,
+        "min_y": 0.0,
+        "max_y": 0.5,
+        "min_z": -0.5,
+        "max_z": 0.5,
+        "width_x": 1.0,
+        "height_y": 0.5,
+        "depth_z": 1.0
+      },
+      "godot_bounds_open": null,
+      "godot_bounds_animation_sweep": null,
+      "rest_matches_close_end": null,
+      "godot_bounds_post_only": null,
+      "previews": [
+        "previews/oak-slab-front.png",
+        "previews/oak-slab-side.png",
+        "previews/oak-slab-top.png"
+      ]
+    },
+    "oak-stairs": {
+      "namespaced_id": "minecraft:oak_stairs",
+      "anchor": "bottom-center (0, 0, 0), ascends toward +Z (front step faces -Z)",
+      "support_requirement": "none (self-supporting)",
+      "occupancy_cells": [
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "clearance_cells": [],
+      "name": "oak-stairs",
+      "glb": "exports/oak-stairs.glb",
+      "sha256": "d1ea9a86e498acdcc528b5942d1e16adaf42da34ed70f71b40eac2921cb04116",
+      "vertices": 144,
+      "triangles": 68,
+      "materials": [
+        "OakPlanks"
+      ],
+      "unpacked_external_images": [],
+      "nodes": [
+        "OakStairsMesh",
+        "oak_stairs"
+      ],
+      "animations": [],
+      "godot_bounds_closed_or_rest": {
+        "min_x": -0.5,
+        "max_x": 0.5,
+        "min_y": 0.0,
+        "max_y": 1.0,
+        "min_z": -0.5,
+        "max_z": 0.5,
+        "width_x": 1.0,
+        "height_y": 1.0,
+        "depth_z": 1.0
+      },
+      "godot_bounds_open": null,
+      "godot_bounds_animation_sweep": null,
+      "rest_matches_close_end": null,
+      "godot_bounds_post_only": null,
+      "previews": [
+        "previews/oak-stairs-front.png",
+        "previews/oak-stairs-side.png",
+        "previews/oak-stairs-top.png"
+      ]
+    },
+    "oak-door": {
+      "namespaced_id": "minecraft:oak_door",
+      "anchor": "bottom-center (0, 0, 0) of lower cell; DoorHinge at (-0.40625, 0, -0.40625)",
+      "support_requirement": "requires solid block under [0, -1, 0]",
+      "occupancy_cells": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "clearance_cells": [
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          -1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ],
+        [
+          0,
+          1,
+          -1
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1
+        ]
+      ],
+      "clearance_note": "Closed (rest) and Open endpoints fit strictly within [0,0,0] and [0,1,0] (0.0m -X overhang at rest/open). Mid-swing rotation sweeps ~0.039m into -X/-Z around the hinge corner and ~0.005m into +Z at the latch edge.",
+      "name": "oak-door",
+      "glb": "exports/oak-door.glb",
+      "sha256": "8ddc31870d2034c0777b160f4e7f18a6ae0f3c5eebdf58b81d15dac9397feb91",
+      "vertices": 960,
+      "triangles": 440,
+      "materials": [
+        "IronTrim",
+        "OakBark",
+        "OakPlanks"
+      ],
+      "unpacked_external_images": [],
+      "nodes": [
+        "DoorHinge",
+        "DoorLeaf",
+        "oak_door"
+      ],
+      "animations": [
+        "Close",
+        "Open"
+      ],
+      "godot_bounds_closed_or_rest": {
+        "min_x": -0.5,
+        "max_x": 0.5,
+        "min_y": 0.0,
+        "max_y": 2.0,
+        "min_z": -0.5,
+        "max_z": -0.3125,
+        "width_x": 1.0,
+        "height_y": 2.0,
+        "depth_z": 0.1875
+      },
+      "godot_bounds_open": {
+        "min_x": -0.5,
+        "max_x": -0.3125,
+        "min_y": 0.0,
+        "max_y": 2.0,
+        "min_z": -0.5,
+        "max_z": 0.5,
+        "width_x": 0.1875,
+        "height_y": 2.0,
+        "depth_z": 1.0
+      },
+      "godot_bounds_animation_sweep": {
+        "min_x": -0.526,
+        "max_x": 0.5027,
+        "min_y": 0.0,
+        "max_y": 2.0,
+        "min_z": -0.526,
+        "max_z": 0.5027,
+        "width_x": 1.0287,
+        "height_y": 2.0,
+        "depth_z": 1.0287
+      },
+      "rest_matches_close_end": true,
+      "godot_bounds_post_only": null,
+      "previews": [
+        "previews/oak-door-front.png",
+        "previews/oak-door-side.png",
+        "previews/oak-door-top.png",
+        "previews/oak-door-open.png"
+      ]
+    },
+    "oak-fence": {
+      "namespaced_id": "minecraft:oak_fence",
+      "anchor": "bottom-center (0, 0, 0); toggle North/South/East/West branches by neighbor",
+      "support_requirement": "none (self-supporting)",
+      "occupancy_cells": [
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "clearance_cells": [],
+      "geometry_height_note": "Geometry height is 1.0 m; unjumpable 1.5m behavior requires future game-side collision/physics implementation.",
+      "name": "oak-fence",
+      "glb": "exports/oak-fence.glb",
+      "sha256": "f4602b56abd86d4806aeb4a36b49f65f5924ca20402fb05d69f60309db388703",
+      "vertices": 864,
+      "triangles": 396,
+      "materials": [
+        "OakBark",
+        "OakPlanks"
+      ],
+      "unpacked_external_images": [],
+      "nodes": [
+        "East",
+        "North",
+        "Post",
+        "South",
+        "West",
+        "oak_fence"
+      ],
+      "animations": [],
+      "godot_bounds_closed_or_rest": {
+        "min_x": -0.5,
+        "max_x": 0.5,
+        "min_y": 0.0,
+        "max_y": 1.0,
+        "min_z": -0.5,
+        "max_z": 0.5,
+        "width_x": 1.0,
+        "height_y": 1.0,
+        "depth_z": 1.0
+      },
+      "godot_bounds_open": null,
+      "godot_bounds_animation_sweep": null,
+      "rest_matches_close_end": null,
+      "godot_bounds_post_only": {
+        "min_x": -0.125,
+        "max_x": 0.125,
+        "min_y": 0.0,
+        "max_y": 1.0,
+        "min_z": -0.125,
+        "max_z": 0.125,
+        "width_x": 0.25,
+        "height_y": 1.0,
+        "depth_z": 0.25
+      },
+      "previews": [
+        "previews/oak-fence-front.png",
+        "previews/oak-fence-side.png",
+        "previews/oak-fence-top.png"
+      ]
+    },
+    "wooden-chest": {
+      "namespaced_id": "minecraft:chest",
+      "anchor": "bottom-center (0, 0, 0); LidHinge at (0, 0.5625, +0.4375); front faces -Z",
+      "support_requirement": "none (self-supporting)",
+      "occupancy_cells": [
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "clearance_cells": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1
+        ]
+      ],
+      "clearance_note": "Opening the hinged lid swings it upward into [0,1,0] (y=1.4775m) and backward into rear +Z cells [0,0,1] and [0,1,1] (z=0.7575m).",
+      "name": "wooden-chest",
+      "glb": "exports/wooden-chest.glb",
+      "sha256": "0feb3905cd998c904310a633eaffe42cf16f1d62730b23112ab1c5b735a4d8a9",
+      "vertices": 672,
+      "triangles": 308,
+      "materials": [
+        "IronTrim",
+        "OakPlanks"
+      ],
+      "unpacked_external_images": [],
+      "nodes": [
+        "ChestBase",
+        "ChestLid",
+        "LidHinge",
+        "wooden_chest"
+      ],
+      "animations": [
+        "Close",
+        "Open"
+      ],
+      "godot_bounds_closed_or_rest": {
+        "min_x": -0.445,
+        "max_x": 0.445,
+        "min_y": 0.0,
+        "max_y": 0.8825,
+        "min_z": -0.4775,
+        "max_z": 0.4375,
+        "width_x": 0.89,
+        "height_y": 0.8825,
+        "depth_z": 0.915
+      },
+      "godot_bounds_open": {
+        "min_x": -0.445,
+        "max_x": 0.445,
+        "min_y": 0.0,
+        "max_y": 1.4775,
+        "min_z": -0.4375,
+        "max_z": 0.7575,
+        "width_x": 0.89,
+        "height_y": 1.4775,
+        "depth_z": 1.195
+      },
+      "godot_bounds_animation_sweep": {
+        "min_x": -0.445,
+        "max_x": 0.445,
+        "min_y": 0.0,
+        "max_y": 1.4871,
+        "min_z": -0.4811,
+        "max_z": 0.7575,
+        "width_x": 0.89,
+        "height_y": 1.4871,
+        "depth_z": 1.2386
+      },
+      "rest_matches_close_end": true,
+      "godot_bounds_post_only": null,
+      "previews": [
+        "previews/wooden-chest-front.png",
+        "previews/wooden-chest-side.png",
+        "previews/wooden-chest-top.png",
+        "previews/wooden-chest-open.png"
+      ]
+    }
+  }
+}

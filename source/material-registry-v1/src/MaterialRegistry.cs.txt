@@ -1,0 +1,166 @@
+// JOSCRAFT – read-only material registry model + loader (Godot-free, System.Text.Json only).
+// NÁVRH: runtime/Materials/MaterialRegistry.cs  (dodáno jako *.cs.txt – nekompilovat, dokud ho Codex nezkontroluje)
+// The registry is DATA, not game logic: loading it changes nothing in the world, save format or wire format.
+#nullable enable
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+
+public enum MaterialKind { Block, Item, BlockOnly, Pseudo, Unresolved }
+
+public sealed record RegistryRef(int RawId, string SerializationId, IReadOnlyList<string>? Properties);
+public sealed record DataVariant(int Data, int Refs, IReadOnlyList<string> Recipes, string Resolution);
+public sealed record CraftSource(string Recipe, IReadOnlyList<string> Inputs, IReadOnlyList<string> Stations);
+public sealed record JoscraftState(int? StableId, string State, string Graphics, string Function);
+public sealed record BlockForm(string Shape, string Evidence, string PlacesBlock);
+
+public sealed record MaterialEntry(
+    string Id, MaterialKind Kind, string KindEvidence, string Category, string Shape, string ShapeEvidence,
+    RegistryRef? ItemRegistry, RegistryRef? BlockRegistry, int RecipesAsInput, int RecipesAsOutput,
+    IReadOnlyList<DataVariant> DataVariants, IReadOnlyList<CraftSource> CraftedFrom, JoscraftState Joscraft, BlockForm? BlockFormInfo, bool Supplement)
+{
+    public bool IsImplemented => Joscraft.StableId is not null;
+    /// <summary>Shape the world would need: the block form for items such as doors, otherwise the entry shape.</summary>
+    public string WorldShape => BlockFormInfo?.Shape ?? Shape;
+}
+
+public sealed record TagBinding(int Code, IReadOnlyList<int> AcceptsStableIds, string Predicate);
+
+public sealed record TagEntry(
+    string Id, int Recipes, IReadOnlyList<string> RecipeFiles, bool ListedOnMicrosoftLearn,
+    IReadOnlyList<string>? OfficialMembers,            // null = "unknown" (no official complete list)
+    IReadOnlyList<string>? CommunityCandidates,        // null = not listed; NEVER authoritative
+    TagBinding? RuntimeBinding)
+{
+    public bool OfficialMembershipKnown => OfficialMembers is not null;
+}
+
+public sealed class MaterialRegistry
+{
+    public const int SupportedVersion = 1;
+    public int Version { get; }
+    public string CatalogSha256 { get; }
+    public string OfficialCommit { get; }
+    public IReadOnlyDictionary<string, MaterialEntry> Entries { get; }
+    public IReadOnlyDictionary<string, TagEntry> Tags { get; }
+    public IReadOnlyDictionary<string, int> StableIds { get; }
+    public IReadOnlyDictionary<string, TagBinding> TagBindings { get; }
+
+    MaterialRegistry(int version, string catalogSha, string commit, Dictionary<string, MaterialEntry> entries, Dictionary<string, TagEntry> tags,
+        Dictionary<string, int> stable, Dictionary<string, TagBinding> bindings)
+    { Version = version; CatalogSha256 = catalogSha; OfficialCommit = commit; Entries = entries; Tags = tags; StableIds = stable; TagBindings = bindings; }
+
+    public MaterialEntry? Find(string id) => Entries.TryGetValue(id, out var e) ? e : null;
+    public MaterialEntry? ByStableId(int stableId) => Entries.Values.FirstOrDefault(e => e.Joscraft.StableId == stableId);
+
+    /// <summary>Parses and structurally validates the registry. Throws <see cref="FormatException"/> with a precise path on any defect.</summary>
+    public static MaterialRegistry Parse(string json)
+    {
+        using var doc = JsonDocument.Parse(json, new JsonDocumentOptions { AllowTrailingCommas = false, CommentHandling = JsonCommentHandling.Disallow });
+        var root = doc.RootElement;
+        int version = Req(root, "registryVersion").GetInt32();
+        if (version != SupportedVersion) throw new FormatException($"registryVersion {version} is not supported (expected {SupportedVersion})");
+        var sources = Req(root, "sources");
+        string catalogSha = Req(Req(sources, "catalog"), "sha256").GetString() ?? "";
+        string commit = Req(Req(sources, "officialRegistries"), "commit").GetString() ?? "";
+        if (Req(Req(sources, "communityTags"), "authoritative").GetBoolean()) throw new FormatException("sources.communityTags.authoritative must be false");
+
+        var runtime = Req(root, "runtime");
+        var stable = new Dictionary<string, int>(StringComparer.Ordinal);
+        foreach (var p in Req(runtime, "stableIds").EnumerateObject())
+        {
+            int v = p.Value.GetInt32();
+            if (v < 0) throw new FormatException($"runtime.stableIds.{p.Name} negative");
+            if (stable.ContainsValue(v)) throw new FormatException($"runtime.stableIds duplicate number {v}");
+            stable.Add(p.Name, v);
+        }
+        var bindings = new Dictionary<string, TagBinding>(StringComparer.Ordinal);
+        foreach (var p in Req(runtime, "tagBindings").EnumerateObject()) bindings.Add(p.Name, Binding(p.Value, "runtime.tagBindings." + p.Name)!);
+
+        var entries = new Dictionary<string, MaterialEntry>(StringComparer.Ordinal);
+        int i = 0;
+        foreach (var e in Req(root, "entries").EnumerateArray())
+        {
+            string path = $"entries[{i++}]";
+            var entry = Entry(e, path);
+            if (!entries.TryAdd(entry.Id, entry)) throw new FormatException($"{path}: duplicate id {entry.Id}");
+        }
+        var tags = new Dictionary<string, TagEntry>(StringComparer.Ordinal);
+        i = 0;
+        foreach (var t in Req(root, "tags").EnumerateArray())
+        {
+            string path = $"tags[{i++}]";
+            var tag = Tag(t, path);
+            if (!tags.TryAdd(tag.Id, tag)) throw new FormatException($"{path}: duplicate tag {tag.Id}");
+        }
+        return new MaterialRegistry(version, catalogSha, commit, entries, tags, stable, bindings);
+    }
+
+    static JsonElement Req(JsonElement e, string name)
+        => e.ValueKind == JsonValueKind.Object && e.TryGetProperty(name, out var v) ? v : throw new FormatException($"missing property '{name}'");
+    static string Str(JsonElement e, string name, string path)
+        => Req(e, name).ValueKind == JsonValueKind.String ? Req(e, name).GetString()! : throw new FormatException($"{path}.{name} must be a string");
+    static IReadOnlyList<string> StrList(JsonElement e) => e.EnumerateArray().Select(x => x.GetString() ?? throw new FormatException("null string in list")).ToArray();
+
+    static MaterialKind Kind(string s, string path) => s switch
+    {
+        "block" => MaterialKind.Block, "item" => MaterialKind.Item, "block_only" => MaterialKind.BlockOnly,
+        "pseudo" => MaterialKind.Pseudo, "unresolved" => MaterialKind.Unresolved,
+        _ => throw new FormatException($"{path}.kind '{s}' unknown")
+    };
+    static RegistryRef? Ref(JsonElement e)
+        => e.ValueKind == JsonValueKind.Null ? null
+         : new RegistryRef(Req(e, "rawId").GetInt32(), Req(e, "serializationId").GetString() ?? "",
+             e.TryGetProperty("properties", out var p) && p.ValueKind == JsonValueKind.Array ? StrList(p) : null);
+    static TagBinding? Binding(JsonElement e, string path)
+    {
+        if (e.ValueKind == JsonValueKind.Null) return null;
+        int code = Req(e, "code").GetInt32(); if (code >= 0) throw new FormatException($"{path}.code must be negative (runtime tag code)");
+        return new TagBinding(code, Req(e, "acceptsStableIds").EnumerateArray().Select(x => x.GetInt32()).ToArray(), Req(e, "predicate").GetString() ?? "");
+    }
+
+    static readonly HashSet<string> Shapes = new(StringComparer.Ordinal) { "full_cube", "full_cube_oriented", "slab", "stairs", "door", "trapdoor", "fence", "fence_gate", "wall", "pane",
+        "pane_or_fence", "chest", "plant", "crop", "leaves", "fluid", "carpet", "layer", "button", "pressure_plate_or_redstone", "sign", "torch", "lantern", "candle", "rail", "bed", "attached", "head", "item", "n/a" };
+
+    static MaterialEntry Entry(JsonElement e, string path)
+    {
+        string id = Str(e, "id", path);
+        int colon = id.IndexOf(':');
+        if (colon <= 0 || colon == id.Length - 1) throw new FormatException($"{path}.id '{id}' is not namespaced");
+        var kind = Kind(Str(e, "kind", path), path);
+        string shape = Str(e, "shape", path); if (!Shapes.Contains(shape)) throw new FormatException($"{path}.shape '{shape}' unknown");
+        var reg = Req(e, "registry");
+        var recipes = Req(e, "recipes");
+        var variants = Req(e, "dataVariants").EnumerateArray().Select(v => new DataVariant(Req(v, "data").GetInt32(), Req(v, "refs").GetInt32(), StrList(Req(v, "recipes")), Req(v, "resolution").GetString() ?? "unknown")).ToArray();
+        var crafted = Req(e, "craftedFrom").EnumerateArray().Select(c => new CraftSource(Req(c, "recipe").GetString() ?? "", StrList(Req(c, "inputs")), StrList(Req(c, "stations")))).ToArray();
+        var js = Req(e, "joscraft");
+        int? stable = Req(js, "stableId").ValueKind == JsonValueKind.Null ? null : Req(js, "stableId").GetInt32();
+        var jstate = new JoscraftState(stable, Str(js, "state", path + ".joscraft"), Str(js, "graphics", path + ".joscraft"), Str(js, "function", path + ".joscraft"));
+        BlockForm? bf = e.TryGetProperty("blockForm", out var b) ? new BlockForm(Str(b, "shape", path), Str(b, "evidence", path), Str(b, "placesBlock", path)) : null;
+        var entry = new MaterialEntry(id, kind, Str(e, "kindEvidence", path), Str(e, "category", path), shape, Str(e, "shapeEvidence", path),
+            Ref(Req(reg, "item")), Ref(Req(reg, "block")), Req(recipes, "asInput").GetInt32(), Req(recipes, "asOutput").GetInt32(), variants, crafted, jstate, bf,
+            e.TryGetProperty("supplement", out var s) && s.GetBoolean());
+        // Structural invariants – a material is never "pretend complete".
+        if (kind == MaterialKind.Block && (entry.ItemRegistry is null || entry.BlockRegistry is null)) throw new FormatException($"{path}: kind block requires item+block registry refs");
+        if (kind is MaterialKind.Pseudo or MaterialKind.Unresolved && (entry.ItemRegistry is not null || entry.BlockRegistry is not null)) throw new FormatException($"{path}: unresolved entries must not carry registry refs");
+        if (jstate.State == "implemented" && (stable is null || jstate.Graphics == "missing" || jstate.Function == "missing")) throw new FormatException($"{path}: implemented requires stableId, graphics and function");
+        if (stable is not null && jstate.State != "implemented") throw new FormatException($"{path}: stableId present but state is '{jstate.State}'");
+        return entry;
+    }
+
+    static TagEntry Tag(JsonElement t, string path)
+    {
+        string id = Str(t, "id", path);
+        if (Str(t, "kind", path) != "tag") throw new FormatException($"{path}.kind must be 'tag'");
+        var om = Req(t, "officialMembers");
+        IReadOnlyList<string>? official = om.ValueKind == JsonValueKind.String
+            ? (om.GetString() == "unknown" ? null : throw new FormatException($"{path}.officialMembers must be 'unknown' or an array"))
+            : StrList(om);
+        var cc = Req(t, "communityCandidates");
+        IReadOnlyList<string>? community = cc.ValueKind == JsonValueKind.String ? null : StrList(cc);
+        if (Req(t, "communityAuthoritative").GetBoolean()) throw new FormatException($"{path}.communityAuthoritative must be false");
+        return new TagEntry(id, Req(t, "recipes").GetInt32(), StrList(Req(t, "recipeFiles")), Req(t, "listedOnMicrosoftLearn").GetBoolean(), official, community,
+            Binding(Req(t, "runtimeBinding"), path + ".runtimeBinding"));
+    }
+}

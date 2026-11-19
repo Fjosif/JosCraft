@@ -1,0 +1,210 @@
+{
+  "coordinate_convention": "Godot (meters, +Y up, -Z forward, cell X/Z in [-0.5, 0.5])",
+  "blocks": {
+    "minecraft:oak_slab": {
+      "default": [
+        {
+          "center": [
+            0.0,
+            0.25,
+            0.0
+          ],
+          "size": [
+            1.0,
+            0.5,
+            1.0
+          ]
+        }
+      ]
+    },
+    "minecraft:oak_stairs": {
+      "default": [
+        {
+          "center": [
+            0.0,
+            0.25,
+            0.0
+          ],
+          "size": [
+            1.0,
+            0.5,
+            1.0
+          ]
+        },
+        {
+          "center": [
+            0.0,
+            0.75,
+            0.25
+          ],
+          "size": [
+            1.0,
+            0.5,
+            0.5
+          ]
+        }
+      ]
+    },
+    "minecraft:oak_door": {
+      "closed": [
+        {
+          "center": [
+            0.0,
+            1.0,
+            -0.40625
+          ],
+          "size": [
+            1.0,
+            2.0,
+            0.1875
+          ]
+        }
+      ],
+      "open": [
+        {
+          "center": [
+            -0.40625,
+            1.0,
+            0.0
+          ],
+          "size": [
+            0.1875,
+            2.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "minecraft:oak_fence": {
+      "note": "Post geometry height is 1.0m (<=1.5m). Combine Post with active neighbor branches.",
+      "post": [
+        {
+          "center": [
+            0.0,
+            0.5,
+            0.0
+          ],
+          "size": [
+            0.25,
+            1.0,
+            0.25
+          ]
+        }
+      ],
+      "North": [
+        {
+          "center": [
+            0.0,
+            0.565,
+            -0.3125
+          ],
+          "size": [
+            0.12,
+            0.57,
+            0.375
+          ]
+        }
+      ],
+      "South": [
+        {
+          "center": [
+            0.0,
+            0.565,
+            0.3125
+          ],
+          "size": [
+            0.12,
+            0.57,
+            0.375
+          ]
+        }
+      ],
+      "East": [
+        {
+          "center": [
+            0.3125,
+            0.565,
+            0.0
+          ],
+          "size": [
+            0.375,
+            0.57,
+            0.12
+          ]
+        }
+      ],
+      "West": [
+        {
+          "center": [
+            -0.3125,
+            0.565,
+            0.0
+          ],
+          "size": [
+            0.375,
+            0.57,
+            0.12
+          ]
+        }
+      ]
+    },
+    "minecraft:chest": {
+      "closed": [
+        {
+          "name": "ChestBase",
+          "center": [
+            0.0,
+            0.28125,
+            0.0
+          ],
+          "size": [
+            0.89,
+            0.5625,
+            0.875
+          ]
+        },
+        {
+          "name": "ChestLid",
+          "center": [
+            0.0,
+            0.6775,
+            -0.02
+          ],
+          "size": [
+            0.89,
+            0.41,
+            0.915
+          ]
+        }
+      ],
+      "open": [
+        {
+          "name": "ChestBase",
+          "center": [
+            0.0,
+            0.28125,
+            0.0
+          ],
+          "size": [
+            0.89,
+            0.5625,
+            0.875
+          ]
+        },
+        {
+          "name": "ChestLid_Open",
+          "center": [
+            0.0,
+            1.02,
+            0.5525
+          ],
+          "size": [
+            0.89,
+            0.915,
+            0.41
+          ]
+        }
+      ]
+    }
+  }
+}

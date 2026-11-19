@@ -1,0 +1,15 @@
+# Oficiální recepty a příprava materiálů
+
+Katalog `data/recipe-catalog.json` obsahuje normalizované údaje všech1892souborů v `behavior_pack/recipes` oficiálního [Mojang/bedrock-samples](https://github.com/Mojang/bedrock-samples) na commitu `15701fa9c13923f12662984c32c124327e40e3d3`, vzorky Bedrock1.26.60.5. `docs/recipe-import.json` uvádí SHA a počty. Neznamená to všechny historické/Java-only ani všechny v enginu pevně zapsané mechanismy Minecraftu.
+
+Normalizace ponechává fakta: vstupní identifikátory, značky surovin, počty, rozložení, výsledky a typ stanice. Neimportuje Minecraft grafiku, modely, jazyky ani celý původní program. Zdrojové referenční soubory zůstávají lokálně v ignorovaném `build/mojang-reference`; podmínky původního zdroje jsou na [LICENSE.md](https://github.com/Mojang/bedrock-samples/blob/main/LICENSE.md). Vlastní grafika a C# runtime JOSCRAFT vznikají samostatně.
+
+Typy v katalogu:1064shaped,591shapeless,152furnace,70brewing_mix,2brewing_container,12smithing_transform a1smithing_trim. Receptář ve hře hledá přes celý katalog a ukazuje skutečné složení. Označení dostupnosti vyžaduje známý výsledek, všechny ingredience a podporovanou stanici. Chybějící bloky/předměty nejsou předstíranými vyrobitelnými položkami. Jejich plán obsahuje `material-roadmap.csv`:1312jedinečných materiálových ID a značek, počty závislých receptů a zavedená stabilní ID JOSCRAFTu. Značka surovin není sama stavebním blokem.
+
+`RecipeCatalog.Craftable()` a `Smelt()` čtou recepty přímo z téhož katalogu. Přidání nového skutečného materiálu do mapování tím zpřístupní odpovídající recepty bez ručního přepisování celé knihovny. Runtime podporuje posunuté a zrcadlené shaped vzory, shapeless rozložení a aktuálně použitelné základní pece. Lektvary, kovářství a další stanice jsou v katalogu k přípravě; ve hře ještě nefungují.
+
+Základní ověřené příklady: [klacíky](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/behavior_pack/recipes/stick.json), [pochodeň](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/behavior_pack/recipes/torch.json), [pec](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/behavior_pack/recipes/furnace.json), [cihly](https://github.com/Mojang/bedrock-samples/blob/15701fa9c13923f12662984c32c124327e40e3d3/behavior_pack/recipes/brick_block.json).
+
+Vanilla doplněk mimo sampleJSON: kmen v peci → dřevěné uhlí, podle [oficiálního Taking Inventory: Charcoal](https://www.minecraft.net/nb-no/article/charcoal). Uhlí/dřevěné uhlí + klacík →4pochodně. Základní klacíky jsou ze2prken nad sebou →4kusy. Uživatel navíc výslovně potvrdil1kmen →4klacíky; tento recept je odděleně označený JOSCRAFT a u kmene se vybírá proti běžným4prknům. Netvrdí se, že jde o vanilla recept.
+
+Obnova katalogu: stáhnout daný commit pouze do `build/mojang-reference`, spustit `python tools/import_mojang_recipes.py`. Aktualizace zdroje musí být vědomá, s novým commitem a kontrolou rozdílů, nikoli automatické přebírání cizích změn během hraní.

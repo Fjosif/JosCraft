@@ -1,0 +1,14 @@
+{
+  "mode": "built-in image_gen; two new atlas generations; no CLI fallback",
+  "atlas1": {
+    "source": "source/textures/survival-atlas-v1.png",
+    "cells": ["oak-planks", "birch-planks", "spruce-planks", "bricks", "clay", "cobblestone", "table-top", "table-side"],
+    "prompt": "Create a single production texture ATLAS for original JOSCRAFT cozy voxel game, not Minecraft assets. Exactly a 4 columns by 2 rows grid of EIGHT square textures, equal cells, NO borders/gutters/labels/text, edge to edge. Each square orthographic flat uniformly lit material, softly handpainted detailed but calm, seamless tile within cell, no perspective, no cast shadows or bevel. TOP row left to right: golden honey OAK PLANKS horizontal broad boards with subtle seams; very pale cream BIRCH PLANKS broad boards; deep warm brown SPRUCE PLANKS broad boards; rustic red-orange BRICK WALL staggered courses with cream mortar. BOTTOM row left to right: muted blue-gray CLAY earth fine cloudy texture; charcoal COBBLESTONE rounded irregular gray stones; CRAFTING TABLE TOP warm walnut wood square grid of nine inset squares, centered functional work surface, NO writing; CRAFTING TABLE SIDE warm walnut planks and small simple dark tool silhouettes. Consistent original handpainted style, clean readable game textures, no external logos, square overall image."
+  },
+  "atlas2": {
+    "source": "source/textures/furnace-atlas-v1.png",
+    "cells": ["coal-ore", "furnace-front", "furnace-top", "furnace-side"],
+    "prompt": "One original JOSCRAFT game texture atlas, exactly2 columns by2 rows of FOUR equal square texture cells, square overall, NO borders/gutters/labels/text. Flat orthographic straight-on evenly lit handpainted materials, softly textured stylized cozy voxel game, not Minecraft assets. TOP LEFT: coal ore, irregular neutral gray rock with clearly distinct scattered charcoal black mineral chunks embedded in it. TOP RIGHT: front face of a small rustic stone furnace, gray rough blocks, centered dark square opening in lower half with warm orange embers inside, upper small dark vent; entire face flat and square. BOTTOM LEFT: top face of a stone furnace, gray smooth stone border with a single dark center opening, simple chunky shapes. BOTTOM RIGHT: side face of stone furnace, irregular gray cobblestones with subdued seams, no opening. Readable at256px, full bleed cells, no perspective, no cast shadows, no logos. Each cell aligned exactly with quadrant boundaries."
+  },
+  "extraction": "tools/prepare_survival_assets.py extracts grid cells without repainting. Godot normalizes runtime textures to256px with mipmaps. Original generated atlases remain intact."
+}

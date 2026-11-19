@@ -1,0 +1,98 @@
+// Real tests of the registry parser, validator and adapter against the REAL generated material-registry.json and the REAL
+// data/recipe-catalog.json. No Godot, no stubs. Usage: dotnet run -- <material-registry.json> <recipe-catalog.json>
+#nullable enable
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.Json.Nodes;
+
+static class RegistryTests
+{
+    static int passed, failed;
+    static void Check(bool ok, string name, string detail = "") { if (ok) passed++; else { failed++; Console.WriteLine("FAIL: " + name + (detail.Length > 0 ? " – " + detail : "")); } }
+    static bool Throws<T>(Action a) where T : Exception { try { a(); return false; } catch (T) { return true; } }
+
+    static int Main(string[] args)
+    {
+        string regPath = args.Length > 0 ? args[0] : "material-registry.json";
+        string catPath = args.Length > 1 ? args[1] : "recipe-catalog.json";
+        string regJson = File.ReadAllText(regPath), catJson = File.ReadAllText(catPath);
+        var reg = MaterialRegistry.Parse(regJson);
+        var catalog = RecipeCatalogReader.Parse(catJson);
+
+        // ---------- parser ----------
+        Check(reg.Version == 1, "version");
+        Check(catalog.Count == 1892, "catalog recipes", catalog.Count.ToString());
+        Check(reg.Tags.Count == 15, "15 tags referenced by recipes", reg.Tags.Count.ToString());
+        Check(reg.Entries.Count > 1200, "entries", reg.Entries.Count.ToString());
+        Check(reg.OfficialCommit == "15701fa9c13923f12662984c32c124327e40e3d3", "pinned commit");
+        Check(reg.CatalogSha256 == "4f89bdfb660a94b04902c0eb46a53230600648ee9359bf5a073d47c45957e6f8", "catalog sha matches docs/recipe-import.json");
+        Check(reg.StableIds.Count == 33 && reg.StableIds.Values.Min() == 1 && reg.StableIds.Values.Max() == 33, "33 stable ids 1..33");
+        foreach (var (num, id) in MaterialValidator.FrozenV040) Check(reg.StableIds.TryGetValue(id, out int n) && n == num, $"frozen {num}={id}");
+        Check(reg.Find("minecraft:oak_planks")!.Kind == MaterialKind.Block && reg.Find("minecraft:stick")!.Kind == MaterialKind.Item, "block vs item");
+        Check(reg.Find("minecraft:torch")!.WorldShape == "torch", "torch shape from official properties");
+        Check(reg.Find("minecraft:wooden_door") is { Kind: MaterialKind.Item, WorldShape: "door" } d && d.BlockFormInfo!.PlacesBlock == "unknown", "door item keeps block form, placement not asserted");
+        Check(reg.Find("minecraft:oak_slab")!.Shape == "slab" && reg.Find("minecraft:oak_stairs")!.Shape == "stairs" && reg.Find("minecraft:oak_fence")!.Shape == "fence" && reg.Find("minecraft:chest")!.Shape == "chest", "antigravity set shapes");
+        Check(reg.Find("minecraft:dye") is { Kind: MaterialKind.Unresolved } dye && dye.DataVariants.Count >= 10 && dye.DataVariants.All(v => v.Resolution == "unknown"), "dye aux variants kept, unresolved");
+        Check(reg.Find("minecraft:coal")!.DataVariants.Any(v => v.Data == 1), "legacy 'minecraft:coal:1' kept as data variant, not merged into coal");
+        Check(reg.Find("minecraft:potion_type:awkward")!.Kind == MaterialKind.Pseudo, "potion type pseudo id");
+        Check(reg.Find("minecraft:muttonCooked")!.Kind == MaterialKind.Unresolved, "camelCase legacy id unresolved");
+        var planks = reg.Tags["minecraft:planks"];
+        Check(!planks.OfficialMembershipKnown && planks.CommunityCandidates!.Contains("minecraft:oak_planks") && planks.ListedOnMicrosoftLearn, "planks: official unknown, candidates present");
+        Check(reg.Tags["minecraft:mushrooms_for_stew"].OfficialMembers!.Contains("minecraft:shelf_mushroom"), "official membership from vanilla JSON");
+        Check(reg.TagBindings["minecraft:stone_tool_materials"].Code == -3 && reg.TagBindings["minecraft:stone_crafting_materials"].Code == -3, "stone_tool_materials stays bound (not reverted)");
+
+        // ---------- validator on the current state ----------
+        var issues = MaterialValidator.Validate(reg, catalog);
+        var errors = issues.Where(i => i.Severity == IssueSeverity.Error).ToList();
+        Check(errors.Count == 0, "current state has no errors", string.Join(" | ", errors.Take(5)));
+        Check(issues.Any(i => i.Code == "OFFICIAL_MEMBERSHIP_UNKNOWN" && i.Subject == "minecraft:planks"), "unknown membership is reported, not hidden");
+
+        // ---------- regressions: each simulated mistake must be caught ----------
+        string Mut(Action<JsonNode> f) { var n = JsonNode.Parse(regJson)!; f(n); return n.ToJsonString(); }
+        // (a) the original bug: stone_tool_materials not bound -> stone tools silently unavailable
+        var r1 = MaterialRegistry.Parse(Mut(n => n["runtime"]!["tagBindings"]!.AsObject().Remove("minecraft:stone_tool_materials")));
+        var i1 = MaterialValidator.Validate(r1, catalog);
+        Check(i1.Any(i => i.Severity == IssueSeverity.Error && i.Code == "UNBOUND_TAG" && i.Subject == "minecraft:stone_tool_materials" && i.Detail.Contains("stone_pickaxe")), "catches unbound stone_tool_materials");
+        // (b) adding campfire (needs #logs + #coals) without binding #logs
+        var r2 = MaterialRegistry.Parse(Mut(n => AddStable(n, "minecraft:campfire", 34)));
+        Check(MaterialValidator.Validate(r2, catalog).Any(i => i.Severity == IssueSeverity.Error && i.Code == "UNBOUND_TAG" && i.Subject == "minecraft:logs"), "catches unbound #logs when campfire is added");
+        // (c) new id beyond U8
+        var r3 = MaterialRegistry.Parse(Mut(n => AddStable(n, "minecraft:oak_slab", 300)));
+        Check(MaterialValidator.Validate(r3, catalog).Any(i => i.Code == "WIRE_U8_OVERFLOW"), "catches stable id > 255");
+        Check(Throws<InvalidOperationException>(() => RegistryRuntimeAdapter.EnsureWireCompatible(256)) && !Throws<InvalidOperationException>(() => RegistryRuntimeAdapter.EnsureWireCompatible(255)), "wire guard");
+        // (d) renumbering a frozen id
+        var r4 = MaterialRegistry.Parse(Mut(n => { n["runtime"]!["stableIds"]!["minecraft:stick"] = 40; Entry(n, "minecraft:stick")["joscraft"]!["stableId"] = 40; }));
+        Check(MaterialValidator.Validate(r4, catalog).Any(i => i.Code == "STABLE_ID_CHANGED" && i.Subject == "minecraft:stick"), "catches renumbered stable id");
+        // (e) implementing blackstone while #stone_tool_materials still only accepts cobblestone (community candidate → warning, not fact)
+        var r5 = MaterialRegistry.Parse(Mut(n => AddStable(n, "minecraft:blackstone", 34)));
+        Check(MaterialValidator.Validate(r5, catalog).Any(i => i.Severity == IssueSeverity.Warning && i.Code == "CANDIDATE_MEMBER_NOT_ACCEPTED" && i.Detail.Contains("blackstone")), "warns about implemented candidate member");
+        // (f) structural defects are rejected by the parser
+        Check(Throws<FormatException>(() => MaterialRegistry.Parse(Mut(n => n["sources"]!["communityTags"]!["authoritative"] = true))), "community data can never become authoritative");
+        Check(Throws<FormatException>(() => MaterialRegistry.Parse(Mut(n => Entry(n, "minecraft:oak_slab")["joscraft"]!["state"] = "implemented"))), "no pretend-implemented entries");
+        Check(Throws<FormatException>(() => MaterialRegistry.Parse(Mut(n => Entry(n, "minecraft:oak_slab")["shape"] = "cube"))), "unknown shape rejected");
+        Check(Throws<FormatException>(() => MaterialRegistry.Parse(Mut(n => n["runtime"]!["stableIds"]!["minecraft:oak_slab"] = 22))), "duplicate stable number rejected");
+        Check(Throws<FormatException>(() => MaterialRegistry.Parse(Mut(n => n["tags"]![0]!["officialMembers"] = "maybe"))), "officialMembers must be list or 'unknown'");
+        Check(Throws<FormatException>(() => MaterialRegistry.Parse(Mut(n => n["registryVersion"] = 2))), "future version rejected");
+
+        // ---------- adapter: identical answers to today's hard-coded RecipeCatalog ----------
+        var ad = new RegistryRuntimeAdapter(reg);
+        foreach (var (num, id) in MaterialValidator.FrozenV040) Check(ad.StableIdOf(id) == num && ad.StableIdOf(id.Replace("minecraft:", "")) == num, $"adapter id {id}");
+        Check(ad.StableIdOf("minecraft:coal:1") == 0 && ad.StableIdOf("minecraft:coal", 1) == 0 && ad.StableIdOf("minecraft:stone:0") == 3, "aux handling");
+        Check(ad.TagCode("minecraft:planks") == -1 && ad.TagCode("#minecraft:coals") == -2 && ad.TagCode("minecraft:stone_tool_materials") == -3 && ad.TagCode("minecraft:logs") == 0, "tag codes");
+        Check(ad.CodeAccepts(-1, 10) && ad.CodeAccepts(-1, 12) && !ad.CodeAccepts(-1, 13) && ad.CodeAccepts(-2, 33) && ad.CodeAccepts(-3, 14) && !ad.CodeAccepts(-3, 3), "IngredientMatches equivalence");
+        Check(ad.WorldShapeOf("minecraft:wooden_door") == "door" && ad.WorldShapeOf("minecraft:nope") is null, "world shape lookup");
+
+        Console.WriteLine($"passed={passed} failed={failed}");
+        return failed == 0 ? 0 : 1;
+    }
+
+    static JsonNode Entry(JsonNode root, string id) => root["entries"]!.AsArray().First(e => e!["id"]!.GetValue<string>() == id)!;
+    static void AddStable(JsonNode root, string id, int num)
+    {
+        root["runtime"]!["stableIds"]![id] = num;
+        var j = Entry(root, id)["joscraft"]!;
+        j["stableId"] = num; j["state"] = "implemented"; j["graphics"] = "own_v1"; j["function"] = "implemented";
+    }
+}

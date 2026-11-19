@@ -1,0 +1,129 @@
+// JOSCRAFT – read-only validation of the material registry against the recipe catalog and the current runtime bindings.
+// Purpose: catch the "minecraft:stone_tool_materials was not bound" class of bug automatically whenever a material is added.
+// NÁVRH: runtime/Materials/MaterialValidator.cs (+ spouštět z QA/CI, ne ze hry)
+#nullable enable
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+
+public enum IssueSeverity { Info, Warning, Error }
+public sealed record ValidationIssue(IssueSeverity Severity, string Code, string Subject, string Detail);
+
+/// <summary>Minimal, Godot-free view of data/recipe-catalog.json.</summary>
+public sealed record CatalogInput(string Id, bool IsTag, int? Data);
+public sealed record CatalogRecipe(string File, string Kind, IReadOnlyList<string> Stations, IReadOnlyList<CatalogInput> Inputs, IReadOnlyList<CatalogInput> Outputs);
+
+public static class RecipeCatalogReader
+{
+    static readonly string[] InputRoles = { "keys", "ingredients", "input", "reagent", "base", "addition", "template" };
+    public static IReadOnlyList<CatalogRecipe> Parse(string json)
+    {
+        using var doc = JsonDocument.Parse(json);
+        var list = new List<CatalogRecipe>();
+        foreach (var r in doc.RootElement.GetProperty("recipes").EnumerateArray())
+        {
+            var ins = new List<CatalogInput>();
+            foreach (var role in InputRoles)
+            {
+                if (!r.TryGetProperty(role, out var v)) continue;
+                IEnumerable<JsonElement> vals = role == "keys" ? v.EnumerateObject().Select(p => p.Value) : v.ValueKind == JsonValueKind.Array ? v.EnumerateArray().ToArray() : new[] { v };
+                foreach (var x in vals) foreach (var one in x.ValueKind == JsonValueKind.Array ? x.EnumerateArray().ToArray() : new[] { x }) ins.Add(Input(one));
+            }
+            var outs = r.GetProperty("outputs").EnumerateArray().Select(Input).ToArray();
+            list.Add(new CatalogRecipe(r.GetProperty("file").GetString()!, r.GetProperty("kind").GetString()!,
+                r.GetProperty("stations").EnumerateArray().Select(s => s.GetString()!).ToArray(), ins, outs));
+        }
+        return list;
+    }
+    /// <summary>"minecraft:coal:1" (legacy aux string) is split into id + data so it is never mistaken for minecraft:coal.</summary>
+    static CatalogInput Input(JsonElement e)
+    {
+        string id = e.GetProperty("id").GetString()!; bool tag = e.TryGetProperty("tag", out var t) && t.GetBoolean();
+        int? data = e.TryGetProperty("data", out var d) && d.ValueKind == JsonValueKind.Number ? d.GetInt32() : null;
+        var parts = id.Split(':');
+        if (parts.Length == 3 && int.TryParse(parts[2], out int aux)) { id = parts[0] + ":" + parts[1]; data = aux; }
+        return new CatalogInput(id, tag, data);
+    }
+}
+
+public sealed class ValidationOptions
+{
+    /// <summary>Stations the game actually runs today.</summary>
+    public HashSet<string> SupportedStations { get; init; } = new(StringComparer.Ordinal) { "crafting_table", "furnace" };
+    /// <summary>Highest stable id the CURRENT wire format (U8 in NetWriter.Stack/Cell edits/pickups) can carry.</summary>
+    public int MaxWireId { get; init; } = 255;
+    /// <summary>Frozen 0-33 contract (saves store ints; old saves must keep reading).</summary>
+    public IReadOnlyDictionary<int, string> FrozenStableIds { get; init; } = MaterialValidator.FrozenV040;
+}
+
+public static class MaterialValidator
+{
+    /// <summary>Stable ids shipped in JOSCRAFT 0.4.0 (from runtime/RecipeCatalog.cs). Never renumber.</summary>
+    public static readonly IReadOnlyDictionary<int, string> FrozenV040 = new Dictionary<int, string>
+    {
+        [1] = "minecraft:grass_block", [2] = "minecraft:dirt", [3] = "minecraft:stone", [4] = "minecraft:oak_log", [5] = "minecraft:birch_log", [6] = "minecraft:spruce_log",
+        [7] = "minecraft:oak_leaves", [8] = "minecraft:birch_leaves", [9] = "minecraft:spruce_leaves", [10] = "minecraft:oak_planks", [11] = "minecraft:birch_planks",
+        [12] = "minecraft:spruce_planks", [13] = "minecraft:crafting_table", [14] = "minecraft:cobblestone", [15] = "minecraft:clay", [16] = "minecraft:brick_block",
+        [17] = "minecraft:furnace", [18] = "minecraft:coal_ore", [19] = "minecraft:coal", [20] = "minecraft:clay_ball", [21] = "minecraft:brick", [22] = "minecraft:stick",
+        [23] = "minecraft:wooden_pickaxe", [24] = "minecraft:stone_pickaxe", [25] = "minecraft:wooden_axe", [26] = "minecraft:stone_axe", [27] = "minecraft:wooden_sword",
+        [28] = "minecraft:stone_sword", [29] = "minecraft:bone", [30] = "minecraft:carrot", [31] = "minecraft:sweet_berries", [32] = "minecraft:torch", [33] = "minecraft:charcoal",
+    };
+
+    public static IReadOnlyList<ValidationIssue> Validate(MaterialRegistry reg, IReadOnlyList<CatalogRecipe> catalog, ValidationOptions? options = null)
+    {
+        var o = options ?? new ValidationOptions();
+        var issues = new List<ValidationIssue>();
+        void Add(IssueSeverity s, string code, string subject, string detail) => issues.Add(new(s, code, subject, detail));
+
+        // 1) Frozen stable ids and wire width.
+        foreach (var (num, id) in o.FrozenStableIds)
+            if (!reg.StableIds.TryGetValue(id, out int now) || now != num)
+                Add(IssueSeverity.Error, "STABLE_ID_CHANGED", id, $"must stay {num} (saves store ints); registry has {(reg.StableIds.TryGetValue(id, out now) ? now : -1)}");
+        foreach (var (id, num) in reg.StableIds)
+        {
+            if (num > o.MaxWireId)
+                Add(IssueSeverity.Error, "WIRE_U8_OVERFLOW", id, $"stable id {num} > {o.MaxWireId}: NetWriter.Stack/BlockChanged/SnapEdits/Pickup use U8. Requires U16 + NetProtocol.ProtocolVersion bump first.");
+            var e = reg.Find(id);
+            if (e is null) { Add(IssueSeverity.Error, "STABLE_ID_WITHOUT_ENTRY", id, $"stable id {num} has no registry entry"); continue; }
+            if (e.Joscraft.StableId != num) Add(IssueSeverity.Error, "STABLE_ID_MISMATCH", id, $"runtime {num} vs entry {e.Joscraft.StableId}");
+            if (e.Kind is MaterialKind.Pseudo or MaterialKind.Unresolved) Add(IssueSeverity.Error, "IMPLEMENTED_UNRESOLVED", id, "an implemented stable id must map to an official registry id");
+            if (e.WorldShape == "n/a") Add(IssueSeverity.Error, "IMPLEMENTED_WITHOUT_SHAPE", id, "implemented material needs a concrete shape");
+        }
+        foreach (var e in reg.Entries.Values.Where(x => x.Joscraft.StableId is int n && (!reg.StableIds.TryGetValue(x.Id, out int m) || m != n)))
+            Add(IssueSeverity.Error, "ENTRY_STABLE_ID_NOT_IN_RUNTIME", e.Id, $"entry says {e.Joscraft.StableId} but runtime.stableIds does not");
+
+        // 2) Tag bindings – the stone_tool_materials class of omission.
+        bool Implemented(string id) => reg.StableIds.ContainsKey(id);
+        foreach (var r in catalog)
+        {
+            if (r.Outputs.Count == 0 || !r.Outputs.All(x => !x.IsTag && x.Data is null or 0 && Implemented(x.Id))) continue;   // only recipes whose result the game can hold
+            if (!r.Stations.Any(o.SupportedStations.Contains)) continue;
+            var plain = r.Inputs.Where(i => !i.IsTag).ToArray();
+            bool plainOk = plain.All(i => (i.Data is null or 0) && Implemented(i.Id));
+            foreach (var tag in r.Inputs.Where(i => i.IsTag).Select(i => i.Id).Distinct())
+                if (!reg.TagBindings.ContainsKey(tag))
+                    Add(plainOk ? IssueSeverity.Error : IssueSeverity.Warning, "UNBOUND_TAG", tag,
+                        $"{r.File} produces an implemented material but '{tag}' has no runtime binding{(plainOk ? " – recipe silently unavailable" : "")}");
+            foreach (var bad in plain.Where(i => i.Data is > 0))
+                Add(IssueSeverity.Info, "DATA_VARIANT_INPUT", bad.Id, $"{r.File} needs data={bad.Data}; RecipeCatalog treats data>0 as unknown");
+        }
+        foreach (var (tagId, binding) in reg.TagBindings)
+        {
+            var accepted = binding.AcceptsStableIds.Select(n => reg.StableIds.FirstOrDefault(kv => kv.Value == n).Key).ToHashSet(StringComparer.Ordinal);
+            if (accepted.Contains(null!)) Add(IssueSeverity.Error, "BINDING_UNKNOWN_STABLE_ID", tagId, "binding accepts a stable id that does not exist");
+            if (!reg.Tags.TryGetValue(tagId, out var tag)) { Add(IssueSeverity.Warning, "BINDING_FOR_UNUSED_TAG", tagId, "no catalog recipe uses this tag"); continue; }
+            foreach (var m in tag.OfficialMembers ?? Array.Empty<string>())
+                if (Implemented(m) && !accepted.Contains(m)) Add(IssueSeverity.Error, "OFFICIAL_MEMBER_NOT_ACCEPTED", tagId, $"{m} is an evidenced member and implemented but the runtime predicate rejects it");
+            foreach (var m in tag.CommunityCandidates ?? Array.Empty<string>())
+                if (Implemented(m) && !accepted.Contains(m)) Add(IssueSeverity.Warning, "CANDIDATE_MEMBER_NOT_ACCEPTED", tagId, $"{m} is implemented and listed by the community table (non-authoritative) but not accepted – verify");
+            foreach (var m in accepted.Where(a => a is not null))
+                if (tag.OfficialMembers is null && tag.CommunityCandidates is { } cc && !cc.Contains(m))
+                    Add(IssueSeverity.Warning, "ACCEPTED_NOT_A_KNOWN_CANDIDATE", tagId, $"runtime accepts {m}, which no listed source names as a member");
+        }
+        // 3) Tags whose official membership is unknown are reported once, so nobody treats candidates as fact.
+        foreach (var t in reg.Tags.Values.Where(t => t.RuntimeBinding is not null && !t.OfficialMembershipKnown))
+            Add(IssueSeverity.Info, "OFFICIAL_MEMBERSHIP_UNKNOWN", t.Id, "binding is a JOSCRAFT decision; Mojang/Microsoft publish no complete member list");
+        return issues;
+    }
+}

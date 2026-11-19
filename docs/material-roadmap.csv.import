@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://drsxk41t6kllw"
+
+[deps]
+
+files=["res://docs/material-roadmap.Recipe dependencies.translation", "res://docs/material-roadmap.JOSCRAFT stable ID.translation", "res://docs/material-roadmap.State.translation"]
+
+source_file="res://docs/material-roadmap.csv"
+dest_files=["res://docs/material-roadmap.Recipe dependencies.translation", "res://docs/material-roadmap.JOSCRAFT stable ID.translation", "res://docs/material-roadmap.State.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

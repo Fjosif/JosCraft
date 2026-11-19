@@ -1,0 +1,82 @@
+{
+  "method": "Uniform gameplay scaling to 1.85m measured animation height. Original model proportions are preserved on all axes. Physical gameplay body is 0.60m wide/deep; decorative parts do not widen it.",
+  "heroes": [
+    {
+      "id": "tiger",
+      "height": 2.3448277,
+      "width": 1.4401014,
+      "depth": 1.7720053,
+      "scale": 0.7889705499470174
+    },
+    {
+      "id": "fox",
+      "height": 2.37041,
+      "width": 1.5494397,
+      "depth": 1.8889213,
+      "scale": 0.7804557017562362
+    },
+    {
+      "id": "dragon",
+      "height": 2.3827796,
+      "width": 2.2983472,
+      "depth": 1.9371212,
+      "scale": 0.776404162600687
+    },
+    {
+      "id": "unicorn",
+      "height": 2.5580797,
+      "width": 1.419935,
+      "depth": 1.5446473,
+      "scale": 0.7231987338002018
+    },
+    {
+      "id": "robot",
+      "height": 2.4884582,
+      "width": 1.419935,
+      "depth": 1.2294972,
+      "scale": 0.7434322183912915
+    },
+    {
+      "id": "owl",
+      "height": 2.3533669,
+      "width": 1.5992519,
+      "depth": 1.2308751,
+      "scale": 0.7861077675563466
+    },
+    {
+      "id": "panda",
+      "height": 2.3448277,
+      "width": 1.5798904,
+      "depth": 1.2521427,
+      "scale": 0.7889705499470174
+    },
+    {
+      "id": "cat",
+      "height": 2.3634987,
+      "width": 1.4602575,
+      "depth": 1.5871344,
+      "scale": 0.7827378961536979
+    },
+    {
+      "id": "bunny",
+      "height": 2.6947784,
+      "width": 1.419935,
+      "depth": 1.3547041,
+      "scale": 0.6865128501846386
+    },
+    {
+      "id": "bear",
+      "height": 2.3448277,
+      "width": 1.5798904,
+      "depth": 1.2521427,
+      "scale": 0.7889705499470174
+    },
+    {
+      "id": "octo",
+      "height": 2.0013185,
+      "width": 2.4143014,
+      "depth": 2.4061837,
+      "scale": 0.9243905954999168
+    }
+  ]
+}

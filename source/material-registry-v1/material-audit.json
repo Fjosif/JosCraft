@@ -1,0 +1,1529 @@
+{
+ "generated": "2026-11-13",
+ "sources": {
+  "catalog": "4f89bdfb660a94b04902c0eb46a53230600648ee9359bf5a073d47c45957e6f8",
+  "runtime": "da073d6210affa64cad1da1f29a0ec810903e1f26ccb99c6a130543b6c0a2ce1",
+  "roadmap": "8a92db8c6f51e6e08a442dfe632e834ace2f86e5fb8d26f9e01978a257836c80",
+  "officialRegistries": null,
+  "officialTagNames": null,
+  "officialTagComponent": null,
+  "officialNpmVanillaData": null,
+  "communityTags": "d18f858ff144048ab6c61cf0c821a4ba8021aad84b2bd4ef3ac9acfb0702cdcd"
+ },
+ "counts": {
+  "recipes": 1892,
+  "recipeKinds": {
+   "shaped": 1064,
+   "shapeless": 591,
+   "brewing_mix": 70,
+   "brewing_container": 2,
+   "furnace": 152,
+   "smithing_trim": 1,
+   "smithing_transform": 12
+  },
+  "references": 4890,
+  "tagReferences": 93,
+  "uniqueMaterialIds": 1286,
+  "uniqueTags": 15,
+  "byKind": {
+   "item": 314,
+   "block": 887,
+   "unresolved": 29,
+   "block_only": 8,
+   "pseudo": 48
+  },
+  "byCategory": {
+   "wood": 213,
+   "redstone": 30,
+   "misc": 201,
+   "ore_metal": 153,
+   "stone_building": 276,
+   "station": 19,
+   "food_farming": 52,
+   "color_decor": 107,
+   "brewing_magic": 67,
+   "glass_sand": 59,
+   "tool": 54,
+   "fluid": 7,
+   "storage": 14,
+   "armor": 34
+  },
+  "byShape": {
+   "item": 314,
+   "fence": 14,
+   "fence_gate": 13,
+   "sign": 13,
+   "leaves": 14,
+   "full_cube": 373,
+   "full_cube_oriented": 67,
+   "slab": 100,
+   "stairs": 97,
+   "rail": 4,
+   "plant": 20,
+   "wall": 32,
+   "n/a": 77,
+   "button": 9,
+   "door": 12,
+   "pressure_plate_or_redstone": 12,
+   "trapdoor": 16,
+   "candle": 17,
+   "carpet": 18,
+   "pane": 26,
+   "crop": 6,
+   "chest": 11,
+   "lantern": 10,
+   "torch": 4,
+   "fluid": 4,
+   "attached": 2,
+   "layer": 1
+  },
+  "shapeEvidence": {
+   "kind": 391,
+   "name_pattern": 116,
+   "block_properties": 339,
+   "default_assumption": 440
+  },
+  "withDataVariants": 87,
+  "dataVariantRefs": 560,
+  "implementedStableIds": 33,
+  "stations": {
+   "crafting_table": 1281,
+   "deprecated": 34,
+   "brewing_stand": 72,
+   "cartography_table": 2,
+   "stonecutter": 356,
+   "furnace": 134,
+   "blast_furnace": 62,
+   "smoker": 9,
+   "campfire": 9,
+   "soul_campfire": 9,
+   "smithing_table": 13
+  }
+ },
+ "coverage": {
+  "materialsImplemented": 33,
+  "materialsMissing": 1176,
+  "tagsWithRuntimeBinding": 4,
+  "tagsWithOfficialMembership": 1,
+  "tagsListedOnLearn": 9
+ },
+ "stableIdAudit": [
+  {
+   "stableId": 1,
+   "id": "minecraft:grass_block",
+   "kind": "block",
+   "inItemRegistry": true,
+   "inBlockRegistry": true
+  },
+  {
+   "stableId": 2,
+   "id": "minecraft:dirt",
+   "kind": "block",
+   "inItemRegistry": true,
+   "inBlockRegistry": true
+  },
+  {
+   "stableId": 3,
+   "id": "minecraft:stone",
+   "kind": "block",
+   "inItemRegistry": true,
+   "inBlockRegistry": true
+  },
+  {
+   "stableId": 4,
+   "id": "minecraft:oak_log",
+   "kind": "block",
+   "inItemRegistry": true,
+   "inBlockRegistry": true
+  },
+  {
+   "stableId": 5,
+   "id": "minecraft:birch_log",
+   "kind": "block",
+   "inItemRegistry": true,
+   "inBlockRegistry": true
+  },
+  {
+   "stableId": 6,
+   "id": "minecraft:spruce_log",
+   "kind": "block",
+   "inItemRegistry": true,
+   "inBlockRegistry": true
+  },
+  {
+   "stableId": 7,
+   "id": "minecraft:oak_leaves",
+   "kind": "block",
+   "inItemRegistry": true,
+   "inBlockRegistry": true
+  },
+  {
+   "stableId": 8,
+   "id": "minecraft:birch_leaves",
+   "kind": "block",
+   "inItemRegistry": true,
+   "inBlockRegistry": true
+  },
+  {
+   "stableId": 9,
+   "id": "minecraft:spruce_leaves",
+   "kind": "block",
+   "inItemRegistry": true,
+   "inBlockRegistry": true
+  },
+  {
+   "stableId": 10,
+   "id": "minecraft:oak_planks",
+   "kind": "block",
+   "inItemRegistry": true,
+   "inBlockRegistry": true
+  },
+  {
+   "stableId": 11,
+   "id": "minecraft:birch_planks",
+   "kind": "block",
+   "inItemRegistry": true,
+   "inBlockRegistry": true
+  },
+  {
+   "stableId": 12,
+   "id": "minecraft:spruce_planks",
+   "kind": "block",
+   "inItemRegistry": true,
+   "inBlockRegistry": true
+  },
+  {
+   "stableId": 13,
+   "id": "minecraft:crafting_table",
+   "kind": "block",
+   "inItemRegistry": true,
+   "inBlockRegistry": true
+  },
+  {
+   "stableId": 14,
+   "id": "minecraft:cobblestone",
+   "kind": "block",
+   "inItemRegistry": true,
+   "inBlockRegistry": true
+  },
+  {
+   "stableId": 15,
+   "id": "minecraft:clay",
+   "kind": "block",
+   "inItemRegistry": true,
+   "inBlockRegistry": true
+  },
+  {
+   "stableId": 16,
+   "id": "minecraft:brick_block",
+   "kind": "block",
+   "inItemRegistry": true,
+   "inBlockRegistry": true
+  },
+  {
+   "stableId": 17,
+   "id": "minecraft:furnace",
+   "kind": "block",
+   "inItemRegistry": true,
+   "inBlockRegistry": true
+  },
+  {
+   "stableId": 18,
+   "id": "minecraft:coal_ore",
+   "kind": "block",
+   "inItemRegistry": true,
+   "inBlockRegistry": true
+  },
+  {
+   "stableId": 19,
+   "id": "minecraft:coal",
+   "kind": "item",
+   "inItemRegistry": true,
+   "inBlockRegistry": false
+  },
+  {
+   "stableId": 20,
+   "id": "minecraft:clay_ball",
+   "kind": "item",
+   "inItemRegistry": true,
+   "inBlockRegistry": false
+  },
+  {
+   "stableId": 21,
+   "id": "minecraft:brick",
+   "kind": "item",
+   "inItemRegistry": true,
+   "inBlockRegistry": false
+  },
+  {
+   "stableId": 22,
+   "id": "minecraft:stick",
+   "kind": "item",
+   "inItemRegistry": true,
+   "inBlockRegistry": false
+  },
+  {
+   "stableId": 23,
+   "id": "minecraft:wooden_pickaxe",
+   "kind": "item",
+   "inItemRegistry": true,
+   "inBlockRegistry": false
+  },
+  {
+   "stableId": 24,
+   "id": "minecraft:stone_pickaxe",
+   "kind": "item",
+   "inItemRegistry": true,
+   "inBlockRegistry": false
+  },
+  {
+   "stableId": 25,
+   "id": "minecraft:wooden_axe",
+   "kind": "item",
+   "inItemRegistry": true,
+   "inBlockRegistry": false
+  },
+  {
+   "stableId": 26,
+   "id": "minecraft:stone_axe",
+   "kind": "item",
+   "inItemRegistry": true,
+   "inBlockRegistry": false
+  },
+  {
+   "stableId": 27,
+   "id": "minecraft:wooden_sword",
+   "kind": "item",
+   "inItemRegistry": true,
+   "inBlockRegistry": false
+  },
+  {
+   "stableId": 28,
+   "id": "minecraft:stone_sword",
+   "kind": "item",
+   "inItemRegistry": true,
+   "inBlockRegistry": false
+  },
+  {
+   "stableId": 29,
+   "id": "minecraft:bone",
+   "kind": "item",
+   "inItemRegistry": true,
+   "inBlockRegistry": false
+  },
+  {
+   "stableId": 30,
+   "id": "minecraft:carrot",
+   "kind": "item",
+   "inItemRegistry": true,
+   "inBlockRegistry": false
+  },
+  {
+   "stableId": 31,
+   "id": "minecraft:sweet_berries",
+   "kind": "item",
+   "inItemRegistry": true,
+   "inBlockRegistry": false
+  },
+  {
+   "stableId": 32,
+   "id": "minecraft:torch",
+   "kind": "block",
+   "inItemRegistry": true,
+   "inBlockRegistry": true
+  },
+  {
+   "stableId": 33,
+   "id": "minecraft:charcoal",
+   "kind": "item",
+   "inItemRegistry": true,
+   "inBlockRegistry": false
+  }
+ ],
+ "tagAudit": [
+  {
+   "tag": "minecraft:coals",
+   "binding": "type is 19 or 33",
+   "acceptedIds": [
+    "minecraft:charcoal",
+    "minecraft:coal"
+   ],
+   "implementedCandidates": [
+    "minecraft:charcoal",
+    "minecraft:coal"
+   ],
+   "recipesWithImplementedOutputs": [
+    "torch.json"
+   ],
+   "issues": []
+  },
+  {
+   "tag": "minecraft:egg",
+   "binding": null,
+   "acceptedIds": [],
+   "implementedCandidates": [],
+   "recipesWithImplementedOutputs": [],
+   "issues": []
+  },
+  {
+   "tag": "minecraft:logs",
+   "binding": null,
+   "acceptedIds": [],
+   "implementedCandidates": [
+    "minecraft:birch_log",
+    "minecraft:oak_log",
+    "minecraft:spruce_log"
+   ],
+   "recipesWithImplementedOutputs": [],
+   "issues": []
+  },
+  {
+   "tag": "minecraft:logs_that_burn",
+   "binding": null,
+   "acceptedIds": [],
+   "implementedCandidates": [
+    "minecraft:birch_log",
+    "minecraft:oak_log",
+    "minecraft:spruce_log"
+   ],
+   "recipesWithImplementedOutputs": [],
+   "issues": []
+  },
+  {
+   "tag": "minecraft:metal_nuggets",
+   "binding": null,
+   "acceptedIds": [],
+   "implementedCandidates": [],
+   "recipesWithImplementedOutputs": [],
+   "issues": []
+  },
+  {
+   "tag": "minecraft:mushrooms_for_stew",
+   "binding": null,
+   "acceptedIds": [],
+   "implementedCandidates": [],
+   "recipesWithImplementedOutputs": [],
+   "issues": []
+  },
+  {
+   "tag": "minecraft:planks",
+   "binding": "BlockCatalog.IsPlank (10..12)",
+   "acceptedIds": [
+    "minecraft:birch_planks",
+    "minecraft:oak_planks",
+    "minecraft:spruce_planks"
+   ],
+   "implementedCandidates": [
+    "minecraft:birch_planks",
+    "minecraft:oak_planks",
+    "minecraft:spruce_planks"
+   ],
+   "recipesWithImplementedOutputs": [
+    "crafting_table.json",
+    "stick.json",
+    "wooden_axe.json",
+    "wooden_pickaxe.json",
+    "wooden_sword.json"
+   ],
+   "issues": []
+  },
+  {
+   "tag": "minecraft:soul_fire_base_blocks",
+   "binding": null,
+   "acceptedIds": [],
+   "implementedCandidates": [],
+   "recipesWithImplementedOutputs": [],
+   "issues": []
+  },
+  {
+   "tag": "minecraft:stone_crafting_materials",
+   "binding": "type==14",
+   "acceptedIds": [
+    "minecraft:cobblestone"
+   ],
+   "implementedCandidates": [
+    "minecraft:cobblestone"
+   ],
+   "recipesWithImplementedOutputs": [
+    "furnace.json"
+   ],
+   "issues": []
+  },
+  {
+   "tag": "minecraft:stone_tool_materials",
+   "binding": "type==14",
+   "acceptedIds": [
+    "minecraft:cobblestone"
+   ],
+   "implementedCandidates": [
+    "minecraft:cobblestone"
+   ],
+   "recipesWithImplementedOutputs": [
+    "stone_axe.json",
+    "stone_pickaxe.json",
+    "stone_sword.json"
+   ],
+   "issues": []
+  },
+  {
+   "tag": "minecraft:trim_materials",
+   "binding": null,
+   "acceptedIds": [],
+   "implementedCandidates": [],
+   "recipesWithImplementedOutputs": [],
+   "issues": []
+  },
+  {
+   "tag": "minecraft:trim_templates",
+   "binding": null,
+   "acceptedIds": [],
+   "implementedCandidates": [],
+   "recipesWithImplementedOutputs": [],
+   "issues": []
+  },
+  {
+   "tag": "minecraft:trimmable_armors",
+   "binding": null,
+   "acceptedIds": [],
+   "implementedCandidates": [],
+   "recipesWithImplementedOutputs": [],
+   "issues": []
+  },
+  {
+   "tag": "minecraft:wooden_slabs",
+   "binding": null,
+   "acceptedIds": [],
+   "implementedCandidates": [],
+   "recipesWithImplementedOutputs": [],
+   "issues": []
+  },
+  {
+   "tag": "minecraft:wool",
+   "binding": null,
+   "acceptedIds": [],
+   "implementedCandidates": [],
+   "recipesWithImplementedOutputs": [],
+   "issues": []
+  }
+ ],
+ "unresolvedReferences": [
+  {
+   "id": "minecraft:dye",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 162,
+   "dataVariants": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+   ]
+  },
+  {
+   "id": "minecraft:coal",
+   "kind": "item",
+   "reason": "item registry only",
+   "refs": 53,
+   "dataVariants": [
+    0,
+    1
+   ]
+  },
+  {
+   "id": "minecraft:mangrove_planks",
+   "kind": "block",
+   "reason": "item raw_id<256 or negative and same id in block registry (block item)",
+   "refs": 35,
+   "dataVariants": [
+    4
+   ]
+  },
+  {
+   "id": "minecraft:suspicious_stew",
+   "kind": "item",
+   "reason": "item registry only",
+   "refs": 17,
+   "dataVariants": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  {
+   "id": "minecraft:banner",
+   "kind": "item",
+   "reason": "item registry only",
+   "refs": 16,
+   "dataVariants": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+   ]
+  },
+  {
+   "id": "minecraft:potion_type:awkward",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 16,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:wood",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 16,
+   "dataVariants": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+   ]
+  },
+  {
+   "id": "minecraft:potion_type:water",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 15,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:chain",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 14,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:quartz_block",
+   "kind": "block",
+   "reason": "item raw_id<256 or negative and same id in block registry (block item)",
+   "refs": 14,
+   "dataVariants": [
+    0,
+    2
+   ]
+  },
+  {
+   "id": "minecraft:potion_type:mundane",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 13,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:bamboo_planks",
+   "kind": "block",
+   "reason": "item raw_id<256 or negative and same id in block registry (block item)",
+   "refs": 12,
+   "dataVariants": [
+    4
+   ]
+  },
+  {
+   "id": "minecraft:sandstone",
+   "kind": "block",
+   "reason": "item raw_id<256 or negative and same id in block registry (block item)",
+   "refs": 12,
+   "dataVariants": [
+    0,
+    3
+   ]
+  },
+  {
+   "id": "minecraft:boat",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 8,
+   "dataVariants": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "id": "minecraft:chest_boat",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 8,
+   "dataVariants": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "id": "minecraft:emptymap",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 8,
+   "dataVariants": [
+    0,
+    1,
+    2
+   ]
+  },
+  {
+   "id": "minecraft:purpur_block",
+   "kind": "block",
+   "reason": "item raw_id<256 or negative and same id in block registry (block item)",
+   "refs": 8,
+   "dataVariants": [
+    0,
+    2
+   ]
+  },
+  {
+   "id": "minecraft:log",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 7,
+   "dataVariants": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "id": "minecraft:log2",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 7,
+   "dataVariants": [
+    0,
+    1
+   ]
+  },
+  {
+   "id": "minecraft:potion_type:weakness",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 7,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:banner_pattern",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 6,
+   "dataVariants": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "id": "minecraft:piston",
+   "kind": "block",
+   "reason": "item raw_id<256 or negative and same id in block registry (block item)",
+   "refs": 5,
+   "dataVariants": [
+    1
+   ]
+  },
+  {
+   "id": "minecraft:carpet",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 4,
+   "dataVariants": [
+    0,
+    5,
+    8
+   ]
+  },
+  {
+   "id": "minecraft:potion_type:harming",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 4,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:leaping",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 4,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:poison",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 4,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:slowness",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 4,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:strength",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 4,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:swiftness",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 4,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:bucket",
+   "kind": "item",
+   "reason": "item registry only",
+   "refs": 3,
+   "dataVariants": [
+    0,
+    1
+   ]
+  },
+  {
+   "id": "minecraft:chorus_fruit_popped",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 3,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:melon",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 3,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:healing",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 3,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:long_slowness",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 3,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:long_weakness",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 3,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:nightvision",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 3,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:regeneration",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 3,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:strong_harming",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 3,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:turtle_master",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 3,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:speckled_melon",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 3,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:dropper",
+   "kind": "block",
+   "reason": "item raw_id<256 or negative and same id in block registry (block item)",
+   "refs": 2,
+   "dataVariants": [
+    3
+   ]
+  },
+  {
+   "id": "minecraft:potion_type:fire_resistance",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 2,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:invisibility",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 2,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:long_invisibility",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 2,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:long_leaping",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 2,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:long_nightvision",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 2,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:long_poison",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 2,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:long_strength",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 2,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:long_swiftness",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 2,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:slow_falling",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 2,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:strong_healing",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 2,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:strong_poison",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 2,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:strong_strength",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 2,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:water_breathing",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 2,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:skull",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 2,
+   "dataVariants": [
+    1,
+    4
+   ]
+  },
+  {
+   "id": "minecraft:appleenchanted",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:carrotonastick",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:cooked_fish",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:darkoak_sign",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:dispenser",
+   "kind": "block",
+   "reason": "item raw_id<256 or negative and same id in block registry (block item)",
+   "refs": 1,
+   "dataVariants": [
+    3
+   ]
+  },
+  {
+   "id": "minecraft:fish",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:horsearmorgold",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:horsearmoriron",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:horsearmorleather",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:muttonCooked",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:muttonRaw",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:netherstar",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:Awkward",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:Thick",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:infested",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:long_fire_resistance",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:long_mundane",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:long_regeneration",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:long_slow_falling",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:long_turtle_master",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:long_water_breathing",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:oozing",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:strong_leaping",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:strong_regeneration",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:strong_slowness",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:strong_swiftness",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:strong_turtle_master",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:thick",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:weaving",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:potion_type:wind_charged",
+   "kind": "pseudo",
+   "reason": "potion_type selector (brewing); not an item/block id",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:record_5",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:sealantern",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:sign",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 1,
+   "dataVariants": []
+  },
+  {
+   "id": "minecraft:sticky_piston",
+   "kind": "block",
+   "reason": "item raw_id<256 or negative and same id in block registry (block item)",
+   "refs": 1,
+   "dataVariants": [
+    1
+   ]
+  },
+  {
+   "id": "minecraft:turtle_shell_piece",
+   "kind": "unresolved",
+   "reason": "id not present in mojang-items.json or mojang-blocks.json at the pinned commit (legacy alias or aux form)",
+   "refs": 1,
+   "dataVariants": []
+  }
+ ],
+ "catalogFidelity": {
+  "sourceFiles": 1892,
+  "catalogRecipes": 1892,
+  "fileSetDifference": [],
+  "droppedFields": {
+   "unlock": 1601,
+   "format_version": 1892,
+   "group": 399
+  },
+  "droppedExamples": {
+   "unlock": [
+    {
+     "file": "acacia_boat.json",
+     "unlock": {
+      "context": "PlayerInWater"
+     }
+    },
+    {
+     "file": "acacia_chest_boat.json",
+     "unlock": [
+      {
+       "item": "minecraft:boat",
+       "data": 4
+      }
+     ]
+    },
+    {
+     "file": "acacia_door.json",
+     "unlock": [
+      {
+       "item": "minecraft:acacia_planks"
+      }
+     ]
+    },
+    {
+     "file": "acacia_fence.json",
+     "unlock": [
+      {
+       "item": "minecraft:acacia_planks"
+      }
+     ]
+    },
+    {
+     "file": "acacia_fence_gate.json",
+     "unlock": [
+      {
+       "item": "minecraft:acacia_planks"
+      }
+     ]
+    }
+   ],
+   "group": [
+    {
+     "file": "acacia_door.json",
+     "group": "wooden_door"
+    },
+    {
+     "file": "acacia_fence_gate.json",
+     "group": "wooden_fence_gate"
+    },
+    {
+     "file": "acacia_hanging_sign.json",
+     "group": "sign"
+    },
+    {
+     "file": "acacia_planks.json",
+     "group": "planks"
+    },
+    {
+     "file": "acacia_planks_from_stripped.json",
+     "group": "planks"
+    }
+   ]
+  },
+  "auxStringIdsInSource": {
+   "minecraft:coal:1": 29,
+   "minecraft:dye:4": 2,
+   "minecraft:quartz_block:0": 2,
+   "minecraft:wood:4": 1,
+   "minecraft:wood:2": 1,
+   "minecraft:dye:2": 1,
+   "minecraft:wood:5": 1,
+   "minecraft:wood:3": 1,
+   "minecraft:log2:0": 1,
+   "minecraft:log2:1": 1,
+   "minecraft:log:2": 1,
+   "minecraft:log:3": 1,
+   "minecraft:log:0": 1,
+   "minecraft:log:1": 1,
+   "minecraft:wood:0": 1,
+   "minecraft:dye:10": 1,
+   "minecraft:wood:1": 1,
+   "minecraft:stone:0": 1,
+   "minecraft:wood:12": 1,
+   "minecraft:wood:10": 1,
+   "minecraft:wood:13": 1,
+   "minecraft:wood:11": 1,
+   "minecraft:wood:8": 1,
+   "minecraft:wood:9": 1
+  },
+  "note": "Normalization keeps ids, tags, counts, data, patterns, outputs, stations and priority; it drops unlock conditions, group and format_version."
+ },
+ "recipeFamilyGaps": [
+  {
+   "family": "button",
+   "withRecipe": [
+    "minecraft:mangrove_button",
+    "minecraft:cherry_button",
+    "minecraft:pale_oak_button",
+    "minecraft:bamboo_button",
+    "minecraft:crimson_button",
+    "minecraft:warped_button",
+    "minecraft:poplar_button"
+   ],
+   "registryIdWithoutRecipeInSamples": [
+    "minecraft:wooden_button",
+    "minecraft:spruce_button",
+    "minecraft:birch_button",
+    "minecraft:jungle_button",
+    "minecraft:acacia_button",
+    "minecraft:dark_oak_button"
+   ],
+   "note": "Not invented here: either produced via a legacy/aux id (see dataVariants of minecraft:boat, minecraft:sign …) or hardcoded in the engine outside the sample JSON."
+  },
+  {
+   "family": "pressure_plate",
+   "withRecipe": [
+    "minecraft:mangrove_pressure_plate",
+    "minecraft:cherry_pressure_plate",
+    "minecraft:pale_oak_pressure_plate",
+    "minecraft:bamboo_pressure_plate",
+    "minecraft:crimson_pressure_plate",
+    "minecraft:warped_pressure_plate",
+    "minecraft:poplar_pressure_plate"
+   ],
+   "registryIdWithoutRecipeInSamples": [
+    "minecraft:wooden_pressure_plate",
+    "minecraft:spruce_pressure_plate",
+    "minecraft:birch_pressure_plate",
+    "minecraft:jungle_pressure_plate",
+    "minecraft:acacia_pressure_plate",
+    "minecraft:dark_oak_pressure_plate"
+   ],
+   "note": "Not invented here: either produced via a legacy/aux id (see dataVariants of minecraft:boat, minecraft:sign …) or hardcoded in the engine outside the sample JSON."
+  },
+  {
+   "family": "trapdoor",
+   "withRecipe": [
+    "minecraft:mangrove_trapdoor",
+    "minecraft:cherry_trapdoor",
+    "minecraft:pale_oak_trapdoor",
+    "minecraft:bamboo_trapdoor",
+    "minecraft:crimson_trapdoor",
+    "minecraft:warped_trapdoor",
+    "minecraft:poplar_trapdoor"
+   ],
+   "registryIdWithoutRecipeInSamples": [
+    "minecraft:trapdoor",
+    "minecraft:spruce_trapdoor",
+    "minecraft:birch_trapdoor",
+    "minecraft:jungle_trapdoor",
+    "minecraft:acacia_trapdoor",
+    "minecraft:dark_oak_trapdoor"
+   ],
+   "note": "Not invented here: either produced via a legacy/aux id (see dataVariants of minecraft:boat, minecraft:sign …) or hardcoded in the engine outside the sample JSON."
+  },
+  {
+   "family": "sign",
+   "withRecipe": [
+    "minecraft:spruce_sign",
+    "minecraft:birch_sign",
+    "minecraft:jungle_sign",
+    "minecraft:acacia_sign",
+    "minecraft:mangrove_sign",
+    "minecraft:cherry_sign",
+    "minecraft:pale_oak_sign",
+    "minecraft:bamboo_sign",
+    "minecraft:crimson_sign",
+    "minecraft:warped_sign",
+    "minecraft:poplar_sign"
+   ],
+   "registryIdWithoutRecipeInSamples": [
+    "minecraft:oak_sign",
+    "minecraft:dark_oak_sign"
+   ],
+   "note": "Not invented here: either produced via a legacy/aux id (see dataVariants of minecraft:boat, minecraft:sign …) or hardcoded in the engine outside the sample JSON."
+  },
+  {
+   "family": "chest_boat",
+   "withRecipe": [
+    "minecraft:cherry_chest_boat",
+    "minecraft:pale_oak_chest_boat",
+    "minecraft:poplar_chest_boat"
+   ],
+   "registryIdWithoutRecipeInSamples": [
+    "minecraft:oak_chest_boat",
+    "minecraft:spruce_chest_boat",
+    "minecraft:birch_chest_boat",
+    "minecraft:jungle_chest_boat",
+    "minecraft:acacia_chest_boat",
+    "minecraft:dark_oak_chest_boat",
+    "minecraft:mangrove_chest_boat"
+   ],
+   "note": "Not invented here: either produced via a legacy/aux id (see dataVariants of minecraft:boat, minecraft:sign …) or hardcoded in the engine outside the sample JSON."
+  }
+ ],
+ "roadmapReconciliation": {
+  "roadmapRows": 1312,
+  "registryIdsAndTags": 1301,
+  "inRoadmapNotInRegistry": [
+   "minecraft:coal:1",
+   "minecraft:dye:10",
+   "minecraft:dye:2",
+   "minecraft:dye:4",
+   "minecraft:log2:0",
+   "minecraft:log2:1",
+   "minecraft:log:0",
+   "minecraft:log:1",
+   "minecraft:log:2",
+   "minecraft:log:3",
+   "minecraft:quartz_block:0",
+   "minecraft:stone:0",
+   "minecraft:wood:0",
+   "minecraft:wood:1",
+   "minecraft:wood:10",
+   "minecraft:wood:11",
+   "minecraft:wood:12",
+   "minecraft:wood:13",
+   "minecraft:wood:2",
+   "minecraft:wood:3",
+   "minecraft:wood:4",
+   "minecraft:wood:5",
+   "minecraft:wood:8",
+   "minecraft:wood:9"
+  ],
+  "inRegistryNotInRoadmap": [
+   "minecraft:carrots",
+   "minecraft:farmland",
+   "minecraft:flowing_lava",
+   "minecraft:flowing_water",
+   "minecraft:grass_block",
+   "minecraft:lava",
+   "minecraft:lava_bucket",
+   "minecraft:potatoes",
+   "minecraft:sweet_berries",
+   "minecraft:sweet_berry_bush",
+   "minecraft:water",
+   "minecraft:water_bucket",
+   "minecraft:wheat_seeds"
+  ],
+  "note": "Roadmap keys keep aux suffixes (e.g. minecraft:coal:1) as separate ids; the registry folds them into dataVariants of the base id."
+ }
+}

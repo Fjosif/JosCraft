@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "joscraft/material-registry/v1",
+  "title": "JOSCRAFT material registry v1",
+  "type": "object",
+  "required": ["registryVersion", "sources", "classificationRules", "runtime", "entries", "tags"],
+  "properties": {
+    "schema": {"type": "string"},
+    "registryVersion": {"const": 1},
+    "generated": {"type": "string", "format": "date"},
+    "sources": {
+      "type": "object",
+      "required": ["catalog", "runtime", "officialRegistries", "officialTagNames", "communityTags"],
+      "properties": {
+        "catalog": {"type": "object", "required": ["sha256", "source"], "properties": {"sha256": {"$ref": "#/$defs/sha256"}}},
+        "runtime": {"type": "object", "required": ["sha256"], "properties": {"sha256": {"$ref": "#/$defs/sha256"}}},
+        "officialRegistries": {"type": "object", "required": ["repository", "commit", "version", "items", "blocks"],
+          "properties": {"commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"}}},
+        "officialTagNames": {"type": "object", "required": ["url", "membersListed"]},
+        "communityTags": {"type": "object", "required": ["repository", "commit", "authoritative"], "properties": {"authoritative": {"const": false}}}
+      }
+    },
+    "classificationRules": {"type": "object"},
+    "runtime": {
+      "type": "object",
+      "required": ["stableIds", "tagBindings"],
+      "properties": {
+        "stableIds": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0, "maximum": 255},
+          "description": "Wire format is U8 today (NetProtocol / WorldReplica). Above 255 needs U16 + ProtocolVersion bump."},
+        "tagBindings": {"type": "object", "additionalProperties": {
+          "type": "object", "required": ["code", "acceptsStableIds", "predicate"],
+          "properties": {"code": {"type": "integer", "maximum": -1}, "acceptsStableIds": {"type": "array", "items": {"type": "integer", "minimum": 0}}, "predicate": {"type": "string"}}}}
+      }
+    },
+    "entries": {"type": "array", "items": {"$ref": "#/$defs/entry"}},
+    "tags": {"type": "array", "items": {"$ref": "#/$defs/tag"}}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "namespacedId": {"type": "string", "pattern": "^[a-z0-9_]+:[A-Za-z0-9_]+(:[A-Za-z0-9_]+)?$", "$comment": "official samples contain legacy camelCase ids (minecraft:muttonCooked, minecraft:muttonRaw)"},
+    "shape": {"enum": ["full_cube", "full_cube_oriented", "slab", "stairs", "door", "trapdoor", "fence", "fence_gate", "wall", "pane", "pane_or_fence",
+                        "chest", "plant", "crop", "leaves", "fluid", "carpet", "layer", "button", "pressure_plate_or_redstone", "sign", "torch", "lantern",
+                        "candle", "rail", "bed", "attached", "head", "item", "n/a"]},
+    "evidence": {"enum": ["block_properties", "name_pattern", "default_assumption", "kind"]},
+    "registryRef": {"type": ["object", "null"], "required": ["rawId", "serializationId"],
+      "properties": {"rawId": {"type": "integer"}, "serializationId": {"type": "string"}, "properties": {"type": ["array", "null"], "items": {"type": "string"}}}},
+    "entry": {
+      "type": "object",
+      "required": ["id", "kind", "kindEvidence", "category", "shape", "shapeEvidence", "registry", "recipes", "dataVariants", "craftedFrom", "joscraft"],
+      "properties": {
+        "id": {"$ref": "#/$defs/namespacedId"},
+        "kind": {"enum": ["block", "item", "block_only", "pseudo", "unresolved"]},
+        "kindEvidence": {"type": "string"},
+        "category": {"type": "string"},
+        "categoryEvidence": {"const": "name_pattern"},
+        "shape": {"$ref": "#/$defs/shape"},
+        "shapeEvidence": {"$ref": "#/$defs/evidence"},
+        "blockForm": {"type": "object", "required": ["shape", "evidence", "placesBlock"],
+          "properties": {"shape": {"$ref": "#/$defs/shape"}, "evidence": {"$ref": "#/$defs/evidence"}, "placesBlock": {"enum": ["unknown", "yes", "no"]}}},
+        "supplement": {"type": "boolean"},
+        "registry": {"type": "object", "required": ["item", "block"], "properties": {"item": {"$ref": "#/$defs/registryRef"}, "block": {"$ref": "#/$defs/registryRef"}}},
+        "recipes": {"type": "object", "required": ["asInput", "asOutput", "outputFiles"]},
+        "dataVariants": {"type": "array", "items": {"type": "object", "required": ["data", "refs", "recipes", "resolution"],
+          "properties": {"data": {"type": "integer"}, "refs": {"type": "integer", "minimum": 1}, "resolution": {"type": "string"}}}},
+        "craftedFrom": {"type": "array", "items": {"type": "object", "required": ["recipe", "inputs", "stations"]}},
+        "joscraft": {"type": "object", "required": ["stableId", "state", "graphics", "function"],
+          "properties": {"stableId": {"type": ["integer", "null"], "minimum": 0},
+                          "state": {"enum": ["implemented", "missing", "planned", "blocked"]},
+                          "graphics": {"enum": ["own_v1", "missing", "in_progress"]},
+                          "function": {"enum": ["implemented", "missing", "partial"]}}}
+      },
+      "allOf": [
+        {"if": {"properties": {"kind": {"const": "block"}}}, "then": {"properties": {"registry": {"properties": {"item": {"type": "object"}, "block": {"type": "object"}}}}}},
+        {"if": {"properties": {"joscraft": {"properties": {"state": {"const": "implemented"}}}}},
+         "then": {"properties": {"joscraft": {"properties": {"stableId": {"type": "integer"}, "graphics": {"const": "own_v1"}, "function": {"const": "implemented"}}}}}}
+      ]
+    },
+    "tag": {
+      "type": "object",
+      "required": ["id", "kind", "recipes", "listedOnMicrosoftLearn", "officialMembers", "officialMemberEvidence", "communityCandidates", "communityAuthoritative", "runtimeBinding"],
+      "properties": {
+        "id": {"$ref": "#/$defs/namespacedId"},
+        "kind": {"const": "tag"},
+        "officialMembers": {"oneOf": [{"const": "unknown"}, {"type": "array", "items": {"$ref": "#/$defs/namespacedId"}}]},
+        "officialMemberEvidence": {"type": "array", "items": {"type": "object", "required": ["member", "evidence"]}},
+        "communityCandidates": {"oneOf": [{"const": "not_listed"}, {"type": "array", "items": {"type": "string"}}]},
+        "communityAuthoritative": {"const": false},
+        "runtimeBinding": {"type": ["object", "null"]}
+      }
+    }
+  }
+}

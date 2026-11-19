@@ -1,0 +1,233 @@
+[
+  {
+    "id": "tiger",
+    "name": "Tygřík",
+    "species": "tygřík",
+    "tagline": "Odvážně se vrhne na každý úkol",
+    "fur": "#FFA343",
+    "belly": "#FFF5DE",
+    "outline": "#B96A28",
+    "model_status": "pilot",
+    "required_clips": [
+      "Idle",
+      "Walk",
+      "Run",
+      "Jump",
+      "Attack",
+      "Hit",
+      "Sit",
+      "Ride"
+    ],
+    "style": "faithful to original school SVG"
+  },
+  {
+    "id": "fox",
+    "name": "Blesk",
+    "species": "liška",
+    "tagline": "Nejrychlejší počty v lese",
+    "fur": "#FF8A3D",
+    "belly": "#FFF1E2",
+    "outline": "#C85A1A",
+    "model_status": "not_started",
+    "required_clips": [
+      "Idle",
+      "Walk",
+      "Run",
+      "Jump",
+      "Attack",
+      "Hit",
+      "Sit",
+      "Ride"
+    ],
+    "style": "faithful to original school SVG"
+  },
+  {
+    "id": "dragon",
+    "name": "Jiskra",
+    "species": "dráček",
+    "tagline": "Chrlí oheň na chyby",
+    "fur": "#3FBF7F",
+    "belly": "#DDF6C8",
+    "outline": "#23864F",
+    "model_status": "not_started",
+    "required_clips": [
+      "Idle",
+      "Walk",
+      "Run",
+      "Jump",
+      "Attack",
+      "Hit",
+      "Sit",
+      "Ride"
+    ],
+    "style": "faithful to original school SVG"
+  },
+  {
+    "id": "unicorn",
+    "name": "Duha",
+    "species": "jednorožka",
+    "tagline": "Kouzlí s písmenky",
+    "fur": "#FFC2DA",
+    "belly": "#FFFFFF",
+    "outline": "#E07BA6",
+    "model_status": "not_started",
+    "required_clips": [
+      "Idle",
+      "Walk",
+      "Run",
+      "Jump",
+      "Attack",
+      "Hit",
+      "Sit",
+      "Ride"
+    ],
+    "style": "faithful to original school SVG"
+  },
+  {
+    "id": "robot",
+    "name": "Bit",
+    "species": "robot",
+    "tagline": "Pamatuje si všechno",
+    "fur": "#7CC4F5",
+    "belly": "#E4F4FF",
+    "outline": "#3D86C2",
+    "model_status": "not_started",
+    "required_clips": [
+      "Idle",
+      "Walk",
+      "Run",
+      "Jump",
+      "Attack",
+      "Hit",
+      "Sit",
+      "Ride"
+    ],
+    "style": "faithful to original school SVG"
+  },
+  {
+    "id": "owl",
+    "name": "Moudrá",
+    "species": "sovička",
+    "tagline": "Ví, co je v knížkách",
+    "fur": "#B9875A",
+    "belly": "#F5E1C8",
+    "outline": "#7E5532",
+    "model_status": "not_started",
+    "required_clips": [
+      "Idle",
+      "Walk",
+      "Run",
+      "Jump",
+      "Attack",
+      "Hit",
+      "Sit",
+      "Ride"
+    ],
+    "style": "faithful to original school SVG"
+  },
+  {
+    "id": "panda",
+    "name": "Bambus",
+    "species": "panda",
+    "tagline": "Klidná i u těžkých úloh",
+    "fur": "#FFFFFF",
+    "belly": "#FFFFFF",
+    "outline": "#2A2F3A",
+    "model_status": "not_started",
+    "required_clips": [
+      "Idle",
+      "Walk",
+      "Run",
+      "Jump",
+      "Attack",
+      "Hit",
+      "Sit",
+      "Ride"
+    ],
+    "style": "faithful to original school SVG"
+  },
+  {
+    "id": "cat",
+    "name": "Kometa",
+    "species": "kočka",
+    "tagline": "Doskočí až ke hvězdám",
+    "fur": "#9B86E8",
+    "belly": "#ECE6FF",
+    "outline": "#6650B8",
+    "model_status": "not_started",
+    "required_clips": [
+      "Idle",
+      "Walk",
+      "Run",
+      "Jump",
+      "Attack",
+      "Hit",
+      "Sit",
+      "Ride"
+    ],
+    "style": "faithful to original school SVG"
+  },
+  {
+    "id": "bunny",
+    "name": "Hopsa",
+    "species": "zajíček",
+    "tagline": "Skáče z třídy do třídy",
+    "fur": "#E9E4DF",
+    "belly": "#FFFFFF",
+    "outline": "#A99D93",
+    "model_status": "not_started",
+    "required_clips": [
+      "Idle",
+      "Walk",
+      "Run",
+      "Jump",
+      "Attack",
+      "Hit",
+      "Sit",
+      "Ride"
+    ],
+    "style": "faithful to original school SVG"
+  },
+  {
+    "id": "bear",
+    "name": "Brumla",
+    "species": "medvídek",
+    "tagline": "Silný jako vědomosti",
+    "fur": "#C99567",
+    "belly": "#F4DEC4",
+    "outline": "#8A5D36",
+    "model_status": "pilot",
+    "required_clips": [
+      "Idle",
+      "Walk",
+      "Run",
+      "Jump",
+      "Attack",
+      "Hit",
+      "Sit",
+      "Ride"
+    ],
+    "style": "faithful to original school SVG"
+  },
+  {
+    "id": "octo",
+    "name": "Inka",
+    "species": "chobotnička",
+    "tagline": "Osm rukou na osm úkolů",
+    "fur": "#2EC4B6",
+    "belly": "#D3F7F2",
+    "outline": "#178F84",
+    "model_status": "not_started",
+    "required_clips": [
+      "Idle",
+      "Walk",
+      "Run",
+      "Jump",
+      "Attack",
+      "Hit",
+      "Sit",
+      "Ride"
+    ],
+    "style": "faithful to original school SVG"
+  }
+]

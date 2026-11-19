@@ -1,0 +1,17 @@
+{
+  "recipes": 1892,
+  "files": 1892,
+  "kinds": {
+    "shaped": 1064,
+    "shapeless": 591,
+    "brewing_mix": 70,
+    "brewing_container": 2,
+    "furnace": 152,
+    "smithing_trim": 1,
+    "smithing_transform": 12
+  },
+  "materials": 1312,
+  "commit": "15701fa9c13923f12662984c32c124327e40e3d3",
+  "bedrockVersion": "1.26.60.5",
+  "sha256": "4f89bdfb660a94b04902c0eb46a53230600648ee9359bf5a073d47c45957e6f8"
+}

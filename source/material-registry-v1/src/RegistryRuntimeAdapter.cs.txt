@@ -1,0 +1,56 @@
+// JOSCRAFT – read-only bridge from the material registry to the shapes the runtime already uses (stable int ids, negative tag codes).
+// It does NOT add materials, change ids or touch saves/wire format. Intended future use: RecipeCatalog.Type()/Ingredient()/IngredientMatches()
+// read from here instead of the hard-coded dictionary and switch (see HANDOFF.md, hook H2).
+// NÁVRH: runtime/Materials/RegistryRuntimeAdapter.cs
+#nullable enable
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public sealed class RegistryRuntimeAdapter
+{
+    readonly MaterialRegistry registry;
+    readonly Dictionary<string, int> stable;
+    readonly Dictionary<string, TagBinding> tags;
+    readonly Dictionary<int, HashSet<int>> acceptsByCode;
+
+    public RegistryRuntimeAdapter(MaterialRegistry registry)
+    {
+        this.registry = registry;
+        stable = new Dictionary<string, int>(registry.StableIds, StringComparer.Ordinal);
+        tags = new Dictionary<string, TagBinding>(registry.TagBindings, StringComparer.Ordinal);
+        acceptsByCode = new();
+        foreach (var b in tags.Values)
+        {
+            if (!acceptsByCode.TryGetValue(b.Code, out var set)) acceptsByCode[b.Code] = set = new HashSet<int>();
+            else if (!set.SetEquals(b.AcceptsStableIds)) throw new InvalidOperationException($"tag code {b.Code} is shared by bindings with different members");
+            set.UnionWith(b.AcceptsStableIds);
+        }
+    }
+
+    /// <summary>Same contract as RecipeCatalog.Type: 0 = not available in JOSCRAFT. Accepts ids with or without "minecraft:".</summary>
+    public int StableIdOf(string id, int? data = null)
+    {
+        if (data is > 0) return 0;                                    // aux/metadata variants are never silently collapsed
+        var parts = id.Split(':');
+        if (parts.Length == 3) { if (parts[2] != "0") return 0; id = parts[0] + ":" + parts[1]; }   // "minecraft:stone:0" == stone, "minecraft:coal:1" != coal
+        if (!id.Contains(':')) id = "minecraft:" + id;
+        return stable.TryGetValue(id, out int n) ? n : 0;
+    }
+
+    /// <summary>Same contract as RecipeCatalog.Ingredient for tags: negative code, 0 = unbound (recipe unavailable).</summary>
+    public int TagCode(string tag) => tags.TryGetValue(tag.StartsWith('#') ? tag[1..] : tag, out var b) ? b.Code : 0;
+
+    /// <summary>Same contract as RecipeCatalog.IngredientMatches for negative codes.</summary>
+    public bool CodeAccepts(int code, int stableId) => code < 0 ? acceptsByCode.TryGetValue(code, out var s) && s.Contains(stableId) : code == stableId;
+
+    /// <summary>Guard for whoever assigns the next stable id. Today the wire format is U8.</summary>
+    public static void EnsureWireCompatible(int stableId, int maxWireId = 255)
+    {
+        if (stableId < 0 || stableId > maxWireId)
+            throw new InvalidOperationException($"stable id {stableId} does not fit the current U8 wire format; widen NetWriter.Stack/BlockChanged/SnapEdits/Pickup to U16 and bump NetProtocol.ProtocolVersion first.");
+    }
+
+    /// <summary>Shape the world renderer would have to provide (block form for door-like items). Never invents a shape.</summary>
+    public string? WorldShapeOf(string id) => registry.Find(id)?.WorldShape;
+}
